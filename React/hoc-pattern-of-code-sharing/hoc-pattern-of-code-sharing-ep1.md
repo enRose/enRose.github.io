@@ -113,3 +113,5 @@ const nextPageIndex = pageRoutes.findIndex(
         r => r.name === currentPageName) + 1
 const nextPageName = (pageRoutes[nextPageIndex] || {}).name
 ```
+
+That's it. If you're interested in more advanced use case here is HOC [episode 2]().
