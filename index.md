@@ -1,1 +1,3 @@
-# Yini's blog
+# Welcome to Yini's blog
+
+## Why I blog
