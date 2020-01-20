@@ -1,6 +1,6 @@
 # What is HOC? I mean really
 
-React calls it high order component. I personally like to think of it as a JS function that takes a component or even multiple components as some of its parameters, adds extra bits to it, then return it.
+React calls it high order component. I personally like to think of it as a JS function that takes a component or even multiple components as some of its parameters, adds extra bits to it, then returns it.
 
 It is simply a way to avoid writing repetitive code.
 
