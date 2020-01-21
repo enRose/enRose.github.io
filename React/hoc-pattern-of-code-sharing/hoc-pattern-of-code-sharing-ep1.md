@@ -97,7 +97,8 @@ export enum PageNames {
     topics = 'topics',
 }
 
-export const pageRoutes: Array<Page> =          Object.values(PageNames).map(
+export const pageRoutes: Array<Page> =
+    Object.values(PageNames).map(
         pageName => <Page>{
         name: pageName,
         suspense: true

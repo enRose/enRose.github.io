@@ -44,35 +44,96 @@ Decorator('Earth', {
 })
 ```
 
-And it returns an HOC function that takes a React element as parameter. This HOC function in turn returns the wrapped component with extended props: id, name, type, value, onChange.
+And it returns an HOC function that takes an element as parameter and returns the wrapped component with extended props: id, name, type, value, onChange, etc.
+
+Let's take break it up:
+
+> usePrevious custom hook - to retrieve previous value.
 
 ```typescript
-(fieldComponent: JSX.Element) => {
-  const F = ({ fields, onFieldChange }: any) => {
-    let failedRules
-    const onChange = (v: any) => {
-      failedRules = RuleEngine(config.rules, v, fields)
-      onFieldChange(id, v, failedRules, config.correlationId)
-    }
-
-    const extendedProps = {
-      id,
-      name: id,
-      type: config.rules && (config.rules.find((r: any) => r.type) || {}).type || 'text',
-      value: fields[id] === undefined ? config.initialValue : fields[id],
-      onChange: (e: any) => onChange(e.target.value),
-    }
-
-    return React.cloneElement(fieldComponent, extendedProps)
-  }
-
-  const el = React.memo(connect(
-    (state: any) => ({
-      fields: state.fields,
-    }),
-    { onFieldChange },
-  )(F))
-
-  return config.show === false ? null : React.createElement(el)
+/*
+useEffect hook effect might run after several renders asynchronously.
+For this case we should use useLayoutEffect hook which runs immediately
+after each render and in addition this logic doesn’t block painting.
+*/
+const usePrevious = (value: any) => {
+  const ref = useRef()
+  useLayoutEffect(() => {
+    ref.current = value
+  })
+  return ref.current
 }
+
+const prevValue = usePrevious(fields[id])
 ```
+
+A custom hook is basically a function we write that uses built react or 3rd party hooks.
+
+It is in essence a form of code sharing to avoid DRY - Don't Repeat Yourself. 
+
+_It gets very interesting when we throw HOC and custom hook together in the mix._
+
+We are able to remember previous value because of two effects:
+
+- userRef() will always return the same value unless we set: ref.current = newValue
+
+- useLayoutEffect() will only run after component is rendered
+
+```typescript
+
+//1. first time
+const prevValue = usePrevious(undefined)
+//preValue === undefined
+//ref.current === undefined
+
+
+//2. we pass 1
+const prevValue = usePrevious(1)
+
+const usePrevious = (value: any) => {
+  const ref = useRef()
+
+  //this will not run until rendered
+  useLayoutEffect(() => {
+    ref.current = value
+  })
+
+  //this will return first
+  //which is undefined
+  return ref.current
+}
+//preValue === undefined
+//ref.current === undefined
+
+//after render this will run
+useLayoutEffect(() => {
+  ref.current = value
+})
+//now ref.current is 1
+//preValue is still undefined
+
+
+//3. we pass 2
+const prevValue = usePrevious(2)
+
+const usePrevious = (value: any) => {
+  const ref = useRef()
+
+  //this will not run until rendered
+  useLayoutEffect(() => {
+    ref.current = value
+  })
+
+  //this will return first
+  //which is 1
+  return ref.current
+}
+
+//after render this will run
+useLayoutEffect(() => {
+  ref.current = value
+})
+//now ref.current is 2
+//preValue is still 1
+```
+
