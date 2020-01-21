@@ -115,4 +115,6 @@ const nextPageIndex = pageRoutes.findIndex(
 const nextPageName = (pageRoutes[nextPageIndex] || {}).name
 ```
 
-That's it. If you're interested in more advanced use case here is HOC [episode 2]().
+That's it. If you're interested in more advanced use case here is HOC [episode 2](https://enrose.github.io/React/hoc-pattern-of-code-sharing/hoc-pattern-of-code-sharing-ep2).
+
+Source is available on [Github](https://github.com/enRose/react-datalayer/blob/master/demo/src/components/nav.tsx)

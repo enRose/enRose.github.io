@@ -20,28 +20,28 @@ Configuration object has properties of: rules, initialValue, correlationId and s
 
 ```typescript
 Decorator('Earth', {
-	correlationId: 'marvel',
-	rules: [
-		{
-			type: 'text',
-		},
-		{
-			required: true,
-			message: 'Please enter a Marvel name!',
-		},
-		{
-			name: 'EarthRule',
-			validator: IsThanosOnEarth,
-			message: 'Thanos is on Earth',
-		},
-		{
-			name: 'AsgardRule',
-			validator: IsThanosInAsgard,
-			message: 'Thanos is in Asgard',
-		},
-	],
-	initialValue: 'This is Earth'
-})
+  correlationId: 'marvel',
+  rules: [
+    {
+      type: 'text',
+    },
+    {
+      required: true,
+      message: 'Please enter a Marvel name!',
+    },
+    {
+      name: 'EarthRule',
+      validator: IsThanosOnEarth,
+      message: 'Thanos is on Earth',
+    },
+    {
+      name: 'AsgardRule',
+      validator: IsThanosInAsgard,
+      message: 'Thanos is in Asgard',
+    },
+  ],
+  initialValue: 'This is Earth'
+})(<input key='earth' className="spacing" />)
 ```
 
 And it returns an HOC function that takes an element as parameter and returns the wrapped component with extended props: id, name, type, value, onChange, etc.
@@ -269,3 +269,5 @@ Decorator('Earth', {
   initialValue: 'This is Earth'
 })(<input key='earth' className="spacing" />)
 ```
+
+Source is available on [Github](https://github.com/enRose/react-field-decorator/tree/master/src)
