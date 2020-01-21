@@ -137,3 +137,89 @@ useLayoutEffect(() => {
 //preValue is still 1
 ```
 
+> Rule engine - whenever input value changes we run through all the validation rules passed in as config.rules. onFieldChange is a redux action dispatch we use to propagate validation result along with other information to parent.
+
+```typescript
+const onChange = (v: any) => {
+  const failedRules = RuleEngine(config.rules, v, fields)
+  
+  onFieldChange(
+    id,
+    v,
+    failedRules,
+    config.correlationId)
+}
+```
+
+> React.cloneElement() - a generic way of extending existing component props.
+
+```typescript
+const extendedProps = {
+  ref: callbackRef,
+  id,
+  name: id,
+
+  type: config.rules &&
+    (config.rules.find((r: any) => r.type) || {}).type
+    || 'text',
+
+  value: fields[id] === undefined ?
+    config.initialValue :
+    fields[id],
+
+  onChange: (e: any) => onChange(e.target.value),
+}
+
+return React.cloneElement(
+  fieldComponent,
+  extendedProps)
+```
+
+> function F - this is a functional component we use to piece together usePrevious() for auto focus, validation onChange and props extension.
+
+```typescript
+const F = ({ fields, onFieldChange }: any) => {
+  const prevValue = usePrevious(fields[id])
+  const callbackRef = useCallback(node => {
+    if (node && prevValue !== fields[id]) {
+      node.focus()
+    }
+  }, [])
+
+  const onChange = (v: any) => {
+    const failedRules = RuleEngine(config.rules, v, fields)
+    onFieldChange(id, v, failedRules, config.correlationId)
+  }
+
+  const extendedProps = {
+    ref: callbackRef,
+    id,
+    name: id,
+
+    type: config.rules && (config.rules.find((r: any) => r.type) || {}).type || 'text',
+
+    value: fields[id] === undefined ? config.initialValue : fields[id],
+
+    onChange: (e: any) => onChange(e.target.value),
+  }
+
+  return React.cloneElement(fieldComponent, extendedProps)
+}
+```
+
+> Connect F function to redux
+
+```typescript
+const el = React.memo(connect(
+  (state: any) => ({
+    fields: state.fields,
+  }),
+  { onFieldChange },
+)(F))
+```
+
+> The last thing we need is to call React.createElement()
+
+```typescript
+return config.show === false ? null : React.createElement(el)
+```
