@@ -218,8 +218,54 @@ const el = React.memo(connect(
 )(F))
 ```
 
-> The last thing we need is to call React.createElement()
+> The last thing we need is to call React.createElement() and return this element.
 
 ```typescript
 return config.show === false ? null : React.createElement(el)
+```
+
+Here is the overview of decorator:
+
+![hoc decorator overview](hoc-decorator-overview.png)
+
+Finally we can use it like this:
+
+```typescript
+const IsThanosOnEarth = (v: string) => {
+  const isValid = (v || '').trim()
+    .indexOf('thanos') > -1 ? false : true
+
+  return isValid
+}
+
+const IsThanosInAsgard = (v: string, fields:any) => {
+  const isValid = (fields['Asgard'] || '').trim()
+    .indexOf('thanos') > -1 ? false : true
+
+  return isValid
+}
+
+Decorator('Earth', {
+  correlationId: 'marvel',
+  rules: [
+    {
+      type: 'text',
+    },
+    {
+      required: true,
+      message: 'Please enter a Marvel name!',
+    },
+    {
+      name: 'EarthRule',
+      validator: IsThanosOnEarth,
+      message: 'Thanos is on Earth',
+    },
+    {
+      name: 'AsgardRule',
+      validator: IsThanosInAsgard,
+      message: 'Thanos is in Asgard',
+    },
+  ],
+  initialValue: 'This is Earth'
+})(<input key='earth' className="spacing" />)
 ```
