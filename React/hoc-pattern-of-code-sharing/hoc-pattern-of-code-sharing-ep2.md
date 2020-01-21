@@ -6,9 +6,9 @@ Welcome back! Let's see what else HOC can help us with let's dig in.
 
 ## Motivation
 
-Quite often we have fields that need state to be passed into and controlled value be dispatched/collected when change. This is what React refers to as controlled component. We could write onChange to each input field individually and hook up whatever state management you have setup redux, flux, etc. This could quickly become an annoyance if we have tons of input components.
+Quite often we have fields that need state to be passed in and controlled value be dispatched/collected when changes. This is what React refers to as controlled component. We could write onChange to each input field individually and hook up whatever state management you have setup redux, flux, etc. This could quickly become an annoyance if we have tons of input components.
 
-Also when these fields have complex validation logics such as field-x is invalid when field-y contains 'thanos', or field-z has multiple scenarios to be validated each has a different error message. An example would be embossing name on credit card needs to validate: _A. if it is empty. B. if contains profane words. C. if it is within a certain length or it won't fit in on the card._
+Also when these fields have complex validation logics such as field-x is invalid when field-y contains the words 'thanos', or field-z has multiple scenarios to be validated each has a different error message. An example would be embossing name on credit card needs to validate: _A. if it is empty. B. if contains profane words. C. if it is within a certain length or it won't fit in on the card._
 
 With HOC, we can address the issues above in a clear and declarative manner.
 
@@ -48,7 +48,7 @@ And it returns an HOC function that takes an element as parameter and returns th
 
 Let's take break it up:
 
-> usePrevious custom hook - to retrieve previous value.
+> usePrevious custom hook - to retrieve previous value, so then when previous value !== current value we apply focus on the component.
 
 ```typescript
 /*
@@ -69,7 +69,7 @@ const prevValue = usePrevious(fields[id])
 
 A custom hook is basically a function we write that uses built react or 3rd party hooks.
 
-It is in essence a form of code sharing to avoid DRY - Don't Repeat Yourself. 
+It is in essence, a form of code sharing too.
 
 _It gets very interesting when we throw HOC and custom hook together in the mix._
 
@@ -151,7 +151,7 @@ const onChange = (v: any) => {
 }
 ```
 
-> React.cloneElement() - a generic way of extending existing component props.
+> React.cloneElement() - a component agnostic way of extending existing component props.
 
 ```typescript
 const extendedProps = {
