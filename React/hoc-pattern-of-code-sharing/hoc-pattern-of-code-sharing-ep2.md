@@ -1,4 +1,4 @@
-# HOC a more involved scenario
+# HOC ep2
 
 Welcome back! Let's see what else HOC can help us with let's dig in.
 
