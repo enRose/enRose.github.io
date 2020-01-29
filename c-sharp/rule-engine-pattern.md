@@ -28,7 +28,7 @@ namespace Barin.RuleEngineExample
 
     public class CatRules : V8Rule<CatRuleCtx>
     {
-        public CompanyRules(CatRuleCtx ctx)
+        public CatRules(CatRuleCtx ctx)
         {
             Ctx = ctx;
 
