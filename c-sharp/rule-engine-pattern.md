@@ -1,3 +1,11 @@
+# Rule Engine Pattern
+
+**29 Jan 2020**
+
+Before delving into why and what the pattern is, it is important to know where I draw the inspiration from - [Unix Rule of Separation](https://enrose.github.io/c-sharp/unix-rule-of-separation).
+
+## Motivation
+
 ## Usage
 
 ```c#
@@ -23,7 +31,7 @@ namespace Barin.RuleEngineExample
         public CompanyRules(CatRuleCtx ctx)
         {
             Ctx = ctx;
-            
+
             Func<Task<bool>>[] r = {
                 LinkedOwnersRule,
                 MustLoveCatRule

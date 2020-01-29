@@ -1,4 +1,5 @@
-# HOC ep2
+# Advanced HOC
+18 Jan 2020
 
 Welcome back! Let's see what else HOC can help us with let's dig in.
 

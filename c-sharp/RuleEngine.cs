@@ -13,6 +13,7 @@ namespace Barin.RuleEngine
     public class V8Rule<T> where T : IV8RuleCtx
     {
         public T Ctx { get; set; }
+        
         public Func<Task<bool>>[] Rules { get; set; }
 
         public void Init<V>(T ctx) where V : V8Rule<T> 
