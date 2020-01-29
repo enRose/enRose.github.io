@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ASB.API.VisaBusinessRewardsExp.Application.CrossCode
+namespace Barin.RuleEngine
 {
     public interface IV8RuleCtx
     {
