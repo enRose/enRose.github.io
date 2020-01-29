@@ -13,22 +13,23 @@ namespace Barin.RuleEngine
     public class V8Rule<T> where T : IV8RuleCtx
     {
         public T Ctx { get; set; }
+        public Func<Task<bool>>[] Rules { get; set; }
 
         public void Init<V>(T ctx) where V : V8Rule<T> 
         {
             Ctx = ctx;
         }
 
-        public async Task<bool> Run(Func<Task<bool>>[] rules)
+        public async Task<bool> Run()
         {
-            if (rules == null || rules.Length == 0)
+            if (Rules?.Length < 1)
             {
                 return false;
             }
 
             var success = true;
 
-            foreach (var rule in rules)
+            foreach (var rule in Rules)
             {
                 success = await rule().ConfigureAwait(false);
 
