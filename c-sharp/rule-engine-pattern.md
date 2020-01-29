@@ -1,4 +1,4 @@
-```
+```c#
 namespace Barin.RuleEngineExample
 {
     // For DI to work, we need an interface.
