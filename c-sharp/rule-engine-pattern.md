@@ -1,3 +1,5 @@
+## Usage
+
 ```c#
 namespace Barin.RuleEngineExample
 {
@@ -16,11 +18,18 @@ namespace Barin.RuleEngineExample
         public ICatRepository CatRepository { get; set; }
     }
 
-    public class CatRules : V8Rule<CompanyRuleCtx>
+    public class CatRules : V8Rule<CatRuleCtx>
     {
-        public CompanyRules(CompanyRuleCtx ctx)
+        public CompanyRules(CatRuleCtx ctx)
         {
             Ctx = ctx;
+            
+            Func<Task<bool>>[] r = {
+                LinkedOwnersRule,
+                MustLoveCatRule
+            };
+
+            Rules = r;
         }
 
         public async Task<bool> LinkedOwnersRule()
@@ -52,4 +61,10 @@ namespace Barin.RuleEngineExample
         }
     }
 }
+```
+
+```c#
+var ctx = new CatRuleCtx();
+var catRules = new CatRules(ctx);
+var isValid = await catRules.Run().ConfigureAwait(false);
 ```
