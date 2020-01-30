@@ -32,12 +32,10 @@ namespace Barin.RuleEngineExample
         {
             Ctx = ctx;
 
-            Func<Task<bool>>[] r = {
+            Rules = new Func<Task<bool>>[] {
                 LinkedOwnersRule,
                 MustLoveCatRule
             };
-
-            Rules = r;
         }
 
         public async Task<bool> LinkedOwnersRule()
@@ -46,7 +44,7 @@ namespace Barin.RuleEngineExample
                 Ctx.Id
             )
             .ConfigureAwait(false);
-            
+
              Ctx.Owners = owners;
 
             return owners?.Count > 0;
