@@ -24,7 +24,7 @@ switch (action.type) {
 
 Okay, let's apply some good old Unix programming philosophy - Fold intelligence into data structure so your program can be simple and stupid.
 
-Here is 
+Here is how:
 
 ```typescript
 import * as actions from '../actions/cats'
