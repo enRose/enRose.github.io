@@ -10,26 +10,26 @@ Here is a contrived example:
 
 ```typescript
 export function* requestCat() {
-	try {
-		const resp  = yield call(catService.get)
-		yield put(actions.requestCatSuccess(resp))
-	} catch (err) {
-		yield put(actions.requestCatError(err))
-	}
+ try {
+  const resp  = yield call(catService.get)
+  yield put(actions.requestCatSuccess(resp))
+ } catch (err) {
+  yield put(actions.requestCatError(err))
+ }
 }
 
 export function* requestDog() {
-	try {
-		const resp  = yield call(dogService.get)
-		yield put(actions.requestDogSuccess(resp))
-	} catch (err) {
-		yield put(actions.requestDogError(err))
-	}
+ try {
+  const resp  = yield call(dogService.get)
+  yield put(actions.requestDogSuccess(resp))
+ } catch (err) {
+  yield put(actions.requestDogError(err))
+ }
 }
 
 export function* catsNDogsSaga() {
-  yield takeLatest(actions.GET_CAT_REQUEST, requestCat)
-	yield takeLatest(actions.GET_DOG_REQUEST, requestDog)
+ yield takeLatest(actions.GET_CAT_REQUEST, requestCat)
+ yield takeLatest(actions.GET_DOG_REQUEST, requestDog)
 }
 ```
 
@@ -67,8 +67,8 @@ const onError = (err:any) => {
 }
 
 export function* requestCatSaga() {
-  yield takeLatest(actions.GET_CAT_REQUEST, safe(onError,requestCat))
-	yield takeLatest(actions.GET_DOG_REQUEST, safe(onError, requestDog))
+ yield takeLatest(actions.GET_CAT_REQUEST, safe(onError,requestCat))
+ yield takeLatest(actions.GET_DOG_REQUEST, safe(onError, requestDog))
 }
 ```
 
