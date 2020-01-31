@@ -48,3 +48,9 @@ export const cat = (state: ICat = firstCat, action: any) => {
   return reduce ? reduce() : state
 }
 ```
+
+We use a data literal called which. Its keys are action type, properties are a lambda function returns a new state.
+
+By doing this, we fold the correlation (knowledge)between action type and its handler into a data structure so our program can be as stupid as ```which[action.type]```.
+
+Thanks for reading if you have any suggestions please PR to my Github.
