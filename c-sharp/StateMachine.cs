@@ -11,11 +11,20 @@ namespace Barin.CrossCode
 
         public void Usage()
         {
-            var companyCtx = new CompanyRuleCtx{ };
+            Add(new CatRuleCtx { 
+                CatId = new Guid(),
+            });
 
-            Store.Add(typeof(CompanyRuleCtx), companyCtx);
+            var s = Get<CatRuleCtx>();
+        }
 
-            var s = Get<CustomerRuleCtx>();
+        public void Add<T>(T s) where T : class
+        {
+            Store.Add(typeof(T), s);
+
+            // OR
+
+            Store[typeof(T)] = s;
         }
 
         public T Get<T>() where T : class
