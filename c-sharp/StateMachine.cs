@@ -11,6 +11,7 @@ namespace Barin.CrossCode
 
         public void Usage()
         {
+            // implicit type refer
             Add(new CatRuleCtx { 
                 CatId = new Guid(),
             });
