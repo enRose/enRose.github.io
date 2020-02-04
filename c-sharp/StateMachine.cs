@@ -21,11 +21,16 @@ namespace Barin.CrossCode
 
         public void Add<T>(T s) where T : class
         {
-            Store.Add(typeof(T), s);
+            var t = typeof(T);
 
-            // OR
-
-            Store[typeof(T)] = s;
+            if (Store.TryGetValue(t, out dynamic o))
+            {
+                Store[typeof(T)] = s;
+            }
+            else
+            {
+                Store.Add(typeof(T), s);
+            }
         }
 
         public T Get<T>() where T : class
