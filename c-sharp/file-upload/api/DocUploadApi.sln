@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocUploadApi", "DocUploadApi.csproj", "{381D9DEA-8EAC-4873-AA9A-01999455DBCE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{381D9DEA-8EAC-4873-AA9A-01999455DBCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{381D9DEA-8EAC-4873-AA9A-01999455DBCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{381D9DEA-8EAC-4873-AA9A-01999455DBCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{381D9DEA-8EAC-4873-AA9A-01999455DBCE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {06DD0161-F9CE-452E-8FDA-1649043E7B95}
+	EndGlobalSection
+EndGlobal
