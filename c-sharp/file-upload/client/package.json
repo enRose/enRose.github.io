@@ -1,8 +1,7 @@
 {
   "dependencies": {
     "react-dom": "latest",
-    "react": "latest",
-    "antd": "latest"
+    "react": "latest"
   },
   "name": "ko8p3mpzw3",
   "description": null,
