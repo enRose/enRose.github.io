@@ -155,7 +155,7 @@ class App extends React.Component {
       /////////////////////
       // uncontrolled input
       /////////////////////
-      <form enctype="multipart/form-data"
+      <form encType="multipart/form-data"
         name="file-upload-form" onSubmit={this.handleSubmit}>
         
         <input id='file-upload' type='file' ref={this.fileInput} multiple/>
