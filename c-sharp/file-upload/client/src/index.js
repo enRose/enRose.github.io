@@ -74,7 +74,7 @@ class App extends React.Component {
     // convert body json into a typed class 
     // so long as request header content-type is application/json 
     ////////////////////////////////////////////
-    // var file = document.getElementById('file-upload').files[0]
+    // var file = this.fileInput.current.files[0]
 
     // console.log(file)
 
@@ -106,7 +106,7 @@ class App extends React.Component {
     /////////////////////////////////////
     // base64 encode PDF file in a string
     /////////////////////////////////////
-    // var file = document.getElementById('file-upload').files[0]
+    // var file = this.fileInput.current.files[0]
 
     // console.log(file)
 
@@ -129,7 +129,7 @@ class App extends React.Component {
     ////////////////////////////////////
     // utf-8 encode txt file in a string
     ////////////////////////////////////
-    // var file = document.getElementById('file-upload').files[0]
+    // var file = this.fileInput.current.files[0]
 
     // console.log(file)
 
@@ -138,7 +138,7 @@ class App extends React.Component {
     // reader.onload = () => {
     //   console.log(reader.result)
 
-    //   fetch('https://localhost:44335/api/FileUpload/Pdf', 
+    //   fetch('https://localhost:44335/api/FileUpload/Txt', 
     //     {
     //       mode: 'cors', type: 'text/plain',
     //       headers:{'Access-Control-Allow-Origin':'*'},
