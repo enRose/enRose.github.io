@@ -123,7 +123,9 @@ This is probably the easiest backend code I can give. It can be separated out in
 
 > For PDF, base64 is the only encoding that I can get it to work. For txt files we simply use the default encode utf-8 when we read the file from disk
 
-Although I don't recommend this approach but if we really want we can base64 encode each file and stick them into an array post them in http body along side with other information.
+Although I don't recommend this approach but if we really want, we can base64 encode each file and stick them into an array post them in http body along side with other information.
+
+> According to [MDN base64 increases its target by 33%](https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding) in size. But in reality I have seen 300% increase.
 
 Below shows posting a single file but the principle is the same for multiple files.
 
@@ -206,13 +208,13 @@ public void InB64([FromBody]FileInB64 v)
 
 The ```[FromBody]``` data binding attribute will force ASP.NET to read body string into a complex type in our case it is called FileInB64. The base64 encoded file content will be mapped to its property B64Str. Then we convert base64 file content into bytes so we can write the file bytes to disk.
 
-> So long as http request header content-type is set to ```application/json``` and ```[FromBody]``` is present, ASP.NET will always bind the json body payload into a complex type in controller action. Even if we have a custom media type formatter that can read the intended complex type.
+> So long as http request header content-type is set to ```application/json``` and ```[FromBody]``` is present, ASP.NET will always bind the json body payload into a complex type in controller action. Even if we have a custom media type formatter that can read the intended complex type in present, it will be ignored.
 
 ## Base64 encode file in simple string
 
 Again I do not recommend this but only to show the possibility here. I am not going through in great details here because I don't think anyone would do file upload this way in real life!
 
-In this approach, we simply encode the PDF into a string then send the string as http body. Since the body is a string, in the backend we need a custom plain text media type formatter.
+In this approach, we simply encode a PDF into a string then send the string as http body. Since the body is a string, in the backend we need a custom plain text media type formatter.
 
 On the client this time we use ```reader.readAsArrayBuffer(file)```. It allows finer grain of data manipulation.
 
@@ -333,3 +335,7 @@ API on https://localhost:44335
 [formData() MDN](https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData)
 
 [manually construct multipart body](https://developer.mozilla.org/en-US/docs/Learn/Forms/Sending_forms_through_JavaScript)
+
+[Base64 encoding](https://developer.mozilla.org/en-US/docs/Web/API/WindowBase64/Base64_encoding_and_decoding)
+
+[HTML file API](https://www.html5rocks.com/en/tutorials/file/dndfiles/)
