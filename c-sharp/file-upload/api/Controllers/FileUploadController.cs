@@ -1,7 +1,9 @@
-﻿using DocUploadApi.Models;
+using DocUploadApi.Models;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Web;
 using System.Web.Http;
@@ -15,6 +17,11 @@ namespace DocUploadApi.Controllers
         [HttpPost]
         public IHttpActionResult Multipart()
         {
+            if (!Request.Content.IsMimeMultipartContent())
+            {
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            }
+
             var file = HttpContext.Current.Request.Files.Count > 0 ?
             HttpContext.Current.Request.Files[0] : null;
 
