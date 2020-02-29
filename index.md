@@ -16,6 +16,6 @@
 
 [Unix Rule of Separation](https://enrose.github.io/c-sharp/unix-rule-of-separation)
 
-[Rule Engine Pattern](https://enrose.github.io/c-sharp/rule-engine-pattern)
+[Rule Engine Pattern](https://enrose.github.io/c-sharp/rule-engine/rule-engine-pattern)
 
 [C# Relearn Series](https://enrose.github.io/ThePerpetualLearner/csharp-relearn/chapter0-motivation)
