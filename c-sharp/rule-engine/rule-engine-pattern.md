@@ -298,4 +298,4 @@ result == "Ok" ?
 
 ## Closing note
 
-There are certain types of Engine that might be more suitable for rules that have inter dependency. For example a Pipe Engine, which by its nature, suggests Rule A's side effect will become Rule B's input state. It really depends on the business requirement. If the problem of the business domain is inherently a sequential workflow, then trying to make each workflow steps artificially unrelated only makes our solution convoluted and unreasonable.
+There are certain types of Engine that might be more suitable for rules that have inter dependency. For example a Pipe Engine, which by its nature, suggests Rule A's side effect will become Rule B's input state. It really depends on the business requirement. If the problem of the business domain is inherently a sequential workflow, then trying to make each workflow steps superficially unrelated only makes our solution convoluted and unreasonable.
