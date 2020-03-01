@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Barin.RuleEngine
+namespace Barin.RuleEngine.NonAsyncEngine
 {
     public abstract class Rule<T>
     {
         public int Priority { get; set; }
-        public virtual string ReasonIfFails => "Invalid";
         public abstract bool IsValid(T ctx);
     }
 
@@ -30,10 +29,10 @@ namespace Barin.RuleEngine
 				Rules.OrderBy(x => x.Priority) :
 				Rules.OrderByDescending(x => x.Priority);
 
-			var failed = rules.FirstOrDefault(r => 
+			var failedRule = rules.FirstOrDefault(r =>
                 r.IsValid(Ctx) == false);
 
-            return failed == null ? valid : failed.ReasonIfFails;
+            return failedRule == null ? valid : nameof(failedRule);
         }
 
         public virtual IDictionary<string, string> All(string valid = "Ok")

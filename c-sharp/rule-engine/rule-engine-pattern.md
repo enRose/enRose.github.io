@@ -144,7 +144,6 @@ namespace Barin.RuleEngine.NonAsyncEngine
     public abstract class Rule<T>
     {
         public int Priority { get; set; }
-        public virtual string ReasonIfFails => "Invalid";
         public abstract bool IsValid(T ctx);
     }
 
@@ -168,10 +167,10 @@ namespace Barin.RuleEngine.NonAsyncEngine
 				Rules.OrderBy(x => x.Priority) :
 				Rules.OrderByDescending(x => x.Priority);
 
-			var failed = rules.FirstOrDefault(r => 
+			var failedRule = rules.FirstOrDefault(r =>
                 r.IsValid(Ctx) == false);
 
-            return failed == null ? valid : failed.ReasonIfFails;
+            return failedRule == null ? valid : nameof(failedRule);
         }
 
         public virtual IDictionary<string, string> All(string valid = "Ok")
@@ -187,11 +186,13 @@ namespace Barin.RuleEngine.NonAsyncEngine
 }
 ```
 
-This demo engine has two running configurations: hits the first failed rule then short-circuit; and runs all rules returns a dictionary contains any rules that failed.
+This demo engine has two configurations: hits the first failed rule then short-circuit; and runs all rules returns a dictionary contains any rules that failed.
 
 Let's look at the rules and rule collection.
 
+CatRules collection inherits from RuleEngine. In rule collection's constructor, it takes in its context and list out all the rules we want the engine to run.
 
+Each rule is a single class that inherits from ```Rule<T>``` and should only test against a single business rule. Name the rule class carefully as its name will be returned if it fails.
 
 ## Rules
 
@@ -217,15 +218,20 @@ namespace Barin.RuleEngine.NonAsyncRules
             Ctx = ctx;
 
             Rules = new List<Rule<CatRuleCtx>> {
-                new MustHaveAnOwnerRule(),
-                new MustLoveCatRule(),
-                new CurrentOwnersMustOver16YearsOld(),
+                new MustHaveAnOwnerRule(1),
+                new MustLoveCatRule(3),
+                new CurrentOwnersMustOver16YearsOld(2),
             };
         }
     }
 
     public class MustHaveAtLeastOneCurrentOwnerRule : Rule<CatRuleCtx>
     {
+        public MustHaveAtLeastOneCurrentOwnerRule(int priority)
+        {
+            Priority = priority;
+        }
+
         public override bool IsValid(CatRuleCtx ctx)
         {
             var currentOwners = ctx.Owners.FirstOrDefault(
@@ -238,6 +244,11 @@ namespace Barin.RuleEngine.NonAsyncRules
 
     public class MustLoveCatRule : Rule<CatRuleCtx>
     {
+        public MustLoveCatRule(int priority)
+        {
+            Priority = priority;
+        }
+
         public override bool IsValid(CatRuleCtx ctx)
         {
             var areTheyAllLoveCats = ctx.Owners
@@ -252,6 +263,11 @@ namespace Barin.RuleEngine.NonAsyncRules
 
     public class CurrentOwnersMustOver16YearsOld : Rule<CatRuleCtx>
     {
+        public CurrentOwnersMustOver16YearsOld(int priority)
+        {
+            Priority = priority;
+        }
+
         public override bool IsValid(CatRuleCtx ctx)
         {
             var allOver16 = ctx.Owners
@@ -266,10 +282,20 @@ namespace Barin.RuleEngine.NonAsyncRules
 }
 ```
 
+With this approach, each business requirement is a single Rule class we won't have trouble to tell if we have implemented all the required rules. And as business requirement changes, a rule can be changed or removed without breaking other rules. New rules can be added in at will with confidence old rules will still work as it is. It demonstrates the power of Open and Close principle.
+
 ## Usage
 
 ```c#
 var ctx = new CatRuleCtx();
 var catRules = new CatRules(ctx);
-var isValid = await catRules.Run().ConfigureAwait(false);
+var result = catRules.FirstFails();
+
+result == "Ok" ?
+    Console.WriteLine("Ok") :
+    Console.WriteLine("Name of failed rule: " + result)
 ```
+
+## Closing note
+
+There are certain types of Engine that might command an inter dependency between rules. For example a Pipe Engine, which by its nature, suggests Rule A's side effect will become Rule B's input state. However, it does not necessarily have to be so, it really depends on the business requirement. If the problem of the business domain inherently is a sequential workflow, then trying to make each workflow steps artificially unrelated only makes our solution convoluted and unreasonable.
