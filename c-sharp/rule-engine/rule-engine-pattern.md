@@ -95,19 +95,19 @@ There are several issues with this approach:
 
 2. Ad-hoc priority management.
 
-    Say we care more about the health conditions of animals more than shelter capacity so we want to return the health validation error first, then we have to fiddle around the validation method copy and past block of code does health check up to the top.
+    Say we care more about the health conditions of animals more than shelter capacity so we want to return the health validation report first, for that to happen, we have to fiddle around the if statements copy and paste block of code does health check up to the top.
 
-    This lack of priority management opens up the possibility of errors. Even worse if sections of the if-else blocks interlinked or share state.
+    This lack of priority management opens up the possibility of errors. Even worse when sections of the if-else blocks interlinked or share state.
 
 3. Lack of state management.
 
     There is no easy way to share state or to export the side effect after validations have run.
 
-    In programming, what we do in essence, is read or write (mutate) state and the logic to do so. So state is pretty important. The side effect of one validation method might become the input state of subsequent or other validation methods. Imagine we have validation for scavenger fish which input state is depending of other species output state.
+    In programming, what we do in essence, is read or mutate state and the logic to do so. So state is pretty important. The side effect of one validation unit might become the input state of subsequent or other validation units. For example, we have validation for scavenger fish which input state is depending of other species output state.
 
 4. Lack of variety of logical operations.
 
-    There is no declarative way to specify how do we want validation methods to be run. We may want to run till we hit the first fails. We may want to run all the validation methods does not matter they fail or not.
+    There is no declarative and incremental way to specify how do we want validation units to be run. We may want to run till we hit the first fails. We may want to run all the validation units does not matter they fail or not. We may even what our units to run in async manner.
 
     As need arises, we may need more different executions.
 
@@ -115,25 +115,25 @@ There are several issues with this approach:
 
 - Context
 
-    The shared state that a collection of rules are running in. It defines the input state as well any side effect rules might have. As Rule Engine evolves, Context could be separated out as an agnostic state machine mutable or immutable.
+    The shared state that a collection of rules are running in. It defines the input (initial) state as well any side effect some rules might have. As Rule Engine evolves, Context could be separated out as an agnostic state machine mutable or immutable.
 
 - Rule
 
     A block of code that follows Single Responsibility and offloads side effect to Context if any.
 
-    Some think that Single Responsibility means doing one thing. However, the advocate of SOLID Robert C. Martin who started off SOLID (although he did not invent the abbreviation) says that SR means single reason to change. In real production code, I found the latter is more practical because it is literally impossible to make each single method or class do one thing or we might get buried in what I call the function-inception - little one liner functions although does one thing but really have no point because the function names does not give us more understanding than that one liner code itself! And we're really just abusing Stack in memory.
+    Some think that Single Responsibility means doing one thing. However, the advocate of SOLID Robert C. Martin who started off SOLID (although he did not invent the abbreviation) says that SR means single reason to change. In real production code, I found the latter is more practical because it is literally impossible to make each single method or class do just one thing or we might get buried in what I call the function-inception - layers of layers those little one liner functions although do one thing but really have no point because the function names does not give us more understanding than that one liner code itself! And we're really just abusing Stack in memory.
 
-    Also it makes sense because the whole idea of SOLID is being agile - how to go about responding to change. And if a unit of code has a single reason to change it is highly likely all its sub-units have the same frequency of change. Although it is doing multiple things, because this single reason, all its sub-units are cohesively glued together in the same theme.
+    Also it makes sense because the whole idea of SOLID is being agile - how to go about responding to change. And if a unit of code has a single reason to change it is highly likely all its sub-units have the same frequency of change. Although it is doing multiple things, because this single reason, all its sub-units are cohesively glued together under the same theme.
 
 - Engine
 
-    A generic, rule agnostic unit of operation that runs a collection of rules in a given configuration - **async, pipe, first-in-first-run, parallel, exclusive-or, logical-and**, etc.
+    A generic, business rule agnostic unit of mechanism that runs a collection of rules in a given configuration - **async, pipe, first-in-first-run, parallel, exclusive-or, logical-and**, etc.
 
     The key is to separate the business rules vs running the rules. So rules and rule-runner can evolve independently.
 
 Let's see the rule engine then we demonstrate how to use it.
 
-> There are many ways to write an engine and this is one of them. You extend the concept by adding async or parallel runner etc. 
+> There are many ways to write an engine and this is one of them. You may extend the concept by adding async or parallel runner etc.
 
 ```c#
 using System.Collections.Generic;
@@ -190,7 +190,7 @@ This demo engine has two configurations: hits the first failed rule then short-c
 
 Let's look at the rules and rule collection.
 
-CatRules collection inherits from RuleEngine. In rule collection's constructor, it takes in its context and list out all the rules we want the engine to run.
+CatRules collection inherits from RuleEngine. In rule collection's constructor, it takes in its context and list out all the rules we want the engine to run. And by given a numeric number as priority when each rule is initiated.
 
 Each rule is a single class that inherits from ```Rule<T>``` and should only test against a single business rule. Name the rule class carefully as its name will be returned if it fails.
 
@@ -282,7 +282,7 @@ namespace Barin.RuleEngine.NonAsyncRules
 }
 ```
 
-With this approach, each business requirement is a single Rule class we won't have trouble to tell if we have implemented all the required rules. And as business requirement changes, a rule can be changed or removed without breaking other rules. New rules can be added in at will with confidence old rules will still work as it is. It demonstrates the power of Open and Close principle.
+With this approach, each business requirement is a single Rule class we won't have trouble to tell if we have implemented all the required rules. And as business requirement changes, a rule can be changed or removed without breaking other rules. New rules can be added in at will with confidence old rules will still work as it is. It demonstrates the effect of Open and Close principle.
 
 ## Usage
 
@@ -298,4 +298,4 @@ result == "Ok" ?
 
 ## Closing note
 
-There are certain types of Engine that might command an inter dependency between rules. For example a Pipe Engine, which by its nature, suggests Rule A's side effect will become Rule B's input state. However, it does not necessarily have to be so, it really depends on the business requirement. If the problem of the business domain inherently is a sequential workflow, then trying to make each workflow steps artificially unrelated only makes our solution convoluted and unreasonable.
+There are certain types of Engine that might be more suitable for rules that have inter dependency. For example a Pipe Engine, which by its nature, suggests Rule A's side effect will become Rule B's input state. It really depends on the business requirement. If the problem of the business domain is inherently a sequential workflow, then trying to make each workflow steps artificially unrelated only makes our solution convoluted and unreasonable.
