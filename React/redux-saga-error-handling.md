@@ -35,7 +35,7 @@ export function* catsNDogsSaga() {
 
 As you can see, this is not very good for our mental healthy, let's see if we can do it better.
 
-## try-catch wrapper
+## Option 1: try-catch wrapper
 
 In the case that we don't want error to bubble up to root Saga, or we are interested in handling in a specific saga, we wrap the saga generator in a safe generator.
 
@@ -72,7 +72,7 @@ export function* requestCatSaga() {
 }
 ```
 
-## Global error handler
+## Option 2: Global error handler
 
 So we have to options here:
 
