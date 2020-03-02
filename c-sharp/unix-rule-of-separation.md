@@ -2,7 +2,7 @@
 
 __30 Jan 2020__
 
-I personally don't like to think it as a rule as such, rather I see it as a perspective from which we think and reason our code structure.
+I personally don't like to think it as a rule as such, rather I see it just like any other rules or principles, as a perspective from which we think and reason our code structure.
 
 This rule looks a bit abstract let me give you an every day experience example so you may understand and remember what it means.
 
