@@ -33,7 +33,7 @@ export function* catsNDogsSaga() {
 }
 ```
 
-As you can see, this is not very healthy, let's see if we can do it better.
+As you can see, this is not very good for our mental healthy, let's see if we can do it better.
 
 ## try-catch wrapper
 
