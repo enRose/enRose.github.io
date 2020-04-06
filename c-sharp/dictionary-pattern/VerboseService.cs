@@ -34,7 +34,7 @@ namespace Barin.API.DictionaryPattern
             {
                 core.Analytics.ReportUserStatus(
                     "GetSpiderMan",
-                    eligibility,
+                    eligibility
                 );
 
                 return new SpiderManDto
@@ -70,7 +70,7 @@ namespace Barin.API.DictionaryPattern
             {
                 core.Analytics.ReportUserStatus(
                     "GetThanos",
-                    eligibility,
+                    eligibility
                 );
 
                 return new ThanosDto
@@ -106,7 +106,7 @@ namespace Barin.API.DictionaryPattern
             {
                 core.Analytics.ReportUserStatus(
                     "GetIronMan",
-                    eligibility,
+                    eligibility
                 );
 
                 return new IronManDto
@@ -144,7 +144,7 @@ namespace Barin.API.DictionaryPattern
             {
                 core.Analytics.ReportUserStatus(
                     "GetCaptainAmerica",
-                    eligibility,
+                    eligibility
                 );
 
                 return new CaptainAmericaDto
@@ -180,7 +180,7 @@ namespace Barin.API.DictionaryPattern
             {
                 core.Analytics.ReportUserStatus(
                     "GetWandaMaximoff",
-                    eligibility,
+                    eligibility
                 );
 
                 return new WandaMaximoffDto
@@ -216,7 +216,7 @@ namespace Barin.API.DictionaryPattern
             {
                 core.Analytics.ReportUserStatus(
                     "GetThor",
-                    eligibility,
+                    eligibility
                 );
 
                 return new ThorDto
