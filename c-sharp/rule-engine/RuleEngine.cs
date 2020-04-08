@@ -1,48 +1,110 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Barin.RuleEngine.NonAsyncEngine
 {
-    public abstract class Rule<T>
-    {
-        public int Priority { get; set; }
-        public abstract bool IsValid(T ctx);
+    public class RuleResult
+    { 
+        public bool IsValid { get; set; }
+        public string Reason { get; set; }
     }
 
-	public enum Priority
-	{
-		Ascending,
-		Descending,
-	}
-
-    public abstract class RuleEngine<T>
+    public class RuleEngine<T> where T : class, new()
     {
-        public T Ctx { get; set; }
-
-        public Priority Priority { get; set; }
-
-        public IEnumerable<Rule<T>> Rules { get; set; }
-
-        public virtual string FirstFails(string valid = "Ok")
+        public RuleResult FirstFails(
+            IList<Func<T, RuleResult>> sequentialRules, T ruleCtx)
         {
-			var rules = Priority == Priority.Ascending ?
-				Rules.OrderBy(x => x.Priority) :
-				Rules.OrderByDescending(x => x.Priority);
+            RuleResult firstFailed = null;
 
-			var failedRule = rules.FirstOrDefault(r =>
-                r.IsValid(Ctx) == false);
+            _ = sequentialRules?.FirstOrDefault(r =>
+            {
+                var result = r(ruleCtx);
 
-            return failedRule == null ? valid : nameof(failedRule);
+                firstFailed = result.IsValid == false ? result : null;
+
+                return firstFailed != null;
+            });
+
+            return firstFailed;
         }
 
-        public virtual IDictionary<string, string> All(string valid = "Ok")
+        public IEnumerable<RuleResult> All(
+            IList<Func<T, RuleResult>> sequentialRules, T ruleCtx)
+            => sequentialRules?.Select(r => r(ruleCtx));
+
+        public async Task<RuleResult> FirstFails(
+            IList<Func<T, Task<RuleResult>>> sequentialAsyncRules, T ruleCtx)
         {
-			return rules
-                .Where(r => r.IsValid(Ctx) == false)
-                .Select(r => new KeyValuePair<string, string>(
-                    r.ReasonIfFails, nameof(r)
-                ))
-                .ToDictionary(pair => pair.Key, pair => pair.Value);
+            if (sequentialAsyncRules?.Count < 1)
+            {
+                return null;
+            }
+
+            RuleResult firstFailed = null;
+
+            foreach (var rule in sequentialAsyncRules)
+            {
+                var r = await rule(ruleCtx).ConfigureAwait(false);
+
+                if (r.IsValid == false)
+                {
+                    firstFailed = r;
+
+                    break;
+                }
+            }
+
+            return firstFailed;
+        }
+
+        public async Task<IList<RuleResult>> ParallelAll(
+            List<Func<T, Task<RuleResult>>> parallelAsyncRules, T ruleCtx)
+        {
+            if (parallelAsyncRules?.Count < 1)
+            {
+                return null;
+            }
+
+            var tasks = parallelAsyncRules.Select(r => r(ruleCtx));
+
+            return await Task.WhenAll(tasks).ConfigureAwait(false);
+        }
+    }
+
+    public static class RuleEngineExtensions
+    {
+        public static RuleResult FirstFails<T> (
+            this IList<Func<T, RuleResult>> sequentialRules, T ruleCtx)
+            where T : class, new()
+        {
+            return new RuleEngine<T>().FirstFails(sequentialRules, ruleCtx);
+        }
+
+        public static IEnumerable<RuleResult> All<T>(
+            this IList<Func<T, RuleResult>> sequentialRules, T ruleCtx)
+            where T : class, new() =>
+
+            new RuleEngine<T>().All(sequentialRules, ruleCtx);
+
+
+        public static async Task<RuleResult> FirstFails<T>(
+            this IList<Func<T, Task<RuleResult>>> sequentialAsyncRules,  T ruleCtx)
+            where T : class, new()
+        {
+            return await new RuleEngine<T>()
+                .FirstFails(sequentialAsyncRules, ruleCtx)
+                .ConfigureAwait(false);
+        }
+
+        public static async Task<IList<RuleResult>> ParallelAll<T>(
+            this List<Func<T, Task<RuleResult>>> parallelAsyncRules, T ruleCtx)
+            where T : class, new()
+        {
+            return await new RuleEngine<T>()
+                .ParallelAll(parallelAsyncRules, ruleCtx)
+                .ConfigureAwait(false);
         }
     }
 }
