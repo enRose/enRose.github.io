@@ -27,7 +27,7 @@ namespace Barin.API.DictionaryPattern
         }
 
         [SwaggerResponse(HttpStatusCode.OK, type: typeof(DataChunk))]
-        [HttpGet, Route(template: "dataset/{character}", Name="Query")]
+        [HttpGet, Route(template: "query/{character}", Name="Query")]
         public async Task<IHttpActionResult> Query(Guid userId, string character)
         {
             return Ok(await getService.Query(userId, character));
