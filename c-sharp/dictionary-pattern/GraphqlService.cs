@@ -17,7 +17,7 @@ namespace Barin.API.DictionaryPattern
 
     public interface IQueryService
     {
-        Task<Data> Get(Guid userId, string queryRoute);
+        Task<Data> Query(Guid userId, string queryRoute);
     }
 
     public class QueryService : BaseService, IQueryService
@@ -45,12 +45,12 @@ namespace Barin.API.DictionaryPattern
                 return new Data { Eligibility = eligibility };
             }
 
-            var func = new QueryResolver<Data, QueryRoute>()
+            var resovlerFunc = new QueryResolver<Data, QueryRoute>()
               .TryGetResolver(
                 queryRoute, Resolvers
             );
 
-            var data = await func().ConfigureAwait(false);
+            var data = await resovlerFunc().ConfigureAwait(false);
 
             data.Eligibility = CustomerValidity.OK;
 
@@ -59,10 +59,20 @@ namespace Barin.API.DictionaryPattern
 
         public async Task<Data> GetSpiderMan()
         {
-            return new Data
-            {
-                CardProduct = await CardProducts.GetVBR(Config.KeepInCacheInMinutes).ConfigureAwait(false)
+            var spiderMan = await core
+              .Repository.MarvelCharactors
+              .Get(Superhero.SpiderMan).ConfigureAwait(false);
+
+            var weapons = await core
+              .Weaponary.Earth.StarkIndustries
+              .GetFor(Superhero.SpiderMan).ConfigureAwait(false);
+
+            spiderMan.StarkSuit = weapons.StarkSuit;
+
+            return new Data() {
+                SpiderMan = spiderMan
             };
         }
+
     }
 }
