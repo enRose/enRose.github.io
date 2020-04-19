@@ -30,7 +30,7 @@ namespace Barin.API.DictionaryPattern
         [HttpGet, Route(template: "dataset/{character}", Name="Query")]
         public async Task<IHttpActionResult> Query(Guid userId, string character)
         {
-            return Ok(await getService.Get(userId, character));
+            return Ok(await getService.Query(userId, character));
         }
 
         [SwaggerResponse(HttpStatusCode.NoContent)]
