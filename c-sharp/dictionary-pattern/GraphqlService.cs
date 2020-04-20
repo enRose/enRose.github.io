@@ -69,10 +69,101 @@ namespace Barin.API.DictionaryPattern
 
             spiderMan.StarkSuit = weapons.StarkSuit;
 
-            return new Data() {
+            return new Data {
                 SpiderMan = spiderMan
             };
         }
 
+        public async Task<Data> GetThanos()
+        {
+            var thanos = await core
+              .Repository.MarvelCharactors
+              .Get(SuperVillains.Thanos).ConfigureAwait(false);
+
+            var weapons = await core
+              .Weaponary.Titan
+              .MakeFrom(Substance.Adamantium).ConfigureAwait(false);
+
+            thanos.DoubleEdgedSword = weapons.DoubleEdgedSword;
+
+            return new Data
+            {
+                Thanos = thanos
+            };
+        }
+
+        public async Task<Data> GetIronMan()
+        {
+            var ironMan = await core
+              .Repository.MarvelCharactors
+              .Get(Superhero.IronMan).ConfigureAwait(false);
+
+            var classicGrayArmor = await core
+              .Weaponary.Earth.StarkIndustries
+              .GetArmor(
+                Superhero.IronMan,
+                Superhero.IronMan.Era.ClassicGrayArmor).ConfigureAwait(false);
+
+            ironMan.Armor = classicGrayArmor;
+
+            return new Data
+            {
+                IronMan = ironMan
+            };
+        }
+
+        public async Task<Data> GetCaptainAmerica()
+        {
+            var captainAmerica = await core
+              .Repository.MarvelCharactors
+              .Get(Superhero.CaptainAmerica).ConfigureAwait(false);
+
+            var shield = await core
+              .Weaponary.Earth
+              .MakeFrom(Substance.VibraniumSteel).ConfigureAwait(false);
+
+            captainAmerica.Shield = shield;
+
+            return new Data
+            {
+                CaptainAmerica = captainAmerica
+            };
+        }
+
+        public async Task<Data> GetWandaMaximoff()
+        {
+            var wandaMaximoff = await core
+              .Repository.MarvelCharactors
+              .Get(Superhero.WandaMaximoff).ConfigureAwait(false);
+
+            var chaosMagic = await core
+              .Weaponary.Earth.Mutant
+              .Get(Power.ChaosMagic).ConfigureAwait(false);
+
+            wandaMaximoff.ChaosMagic = chaosMagic;
+
+            return new Data
+            {
+                WandaMaximoff = wandaMaximoff
+            };
+        }
+
+        public async Task<Data> GetThor()
+        {
+            var thor = await core
+              .Repository.MarvelCharactors
+              .Get(Superhero.Thor).ConfigureAwait(false);
+
+            var stormbreaker = await core
+              .Weaponary.Nidavellir
+              .Get(Substance.Uru).ConfigureAwait(false);
+
+            thor.Stormbreaker = stormbreaker;
+
+            return new Data
+            {
+                Thor = thor
+            };
+        }
     }
 }
