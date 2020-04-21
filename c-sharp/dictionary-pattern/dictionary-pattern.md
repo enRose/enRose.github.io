@@ -4,11 +4,11 @@ Before we delve into this pattern, let's understand some background as in why an
 
 ## The Single Page Application
 
-I remember back in around 2011 there was this new way of building websites call SPA started to gaine significant amount of attention among web community. With SPA we give the website everything it needs from the get-go so there is no round-trip between browser and server, website has enough state that to satisfy user interaction, offline interactivity and responsiveness.
+Although the concept started as early as early 2000, however the real introduction of SPA came around much later among web community. With SPA we give the website (almost) everything it needs from the get-go such as Javascript framework, whole HTML, full state or initial load state, etc. So there are less round-trips between browser and server, website has enough logic and state that to satisfy responsiveness, user interactions and offline interactivity, etc.
 
-The result is a much pleasant user experience as there is no lagging. However, the biggest motivation in my opinion is to off-load as much as computation to the client as possible therefore cut down the cost of running in the cloud.
+The result is a much pleasant user experience as lagging is reduced. However, the biggest motivation in my opinion is to off-load as much as computation to the client as possible therefore cut down the cost of running server logic in the cloud.
 
-As the rise of Javascript frameworks such as 2009 AngularJs[https://en.wikipedia.org/wiki/AngularJS] and shortly followed by 2013 ReactJs[https://en.wikipedia.org/wiki/React_(web_framework)] among web community. New Javascript frameworks had made development in SPA relatively easy and this SPA approach had become the defacto standard of how web apps should be built and it worked really well for a number of years.   
+As the rise of Javascript frameworks such as 2009 AngularJs[https://en.wikipedia.org/wiki/AngularJS] and shortly followed by 2013 ReactJs[https://en.wikipedia.org/wiki/React_(web_framework)]. These new Javascript frameworks had made development in SPA relatively easy and this SPA approach had become the defacto approach as in how web apps should be built. And it worked really well for a number of years.   
 
 ## Progressive Web App
 
