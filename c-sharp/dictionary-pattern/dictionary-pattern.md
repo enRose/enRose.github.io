@@ -1,6 +1,6 @@
 # Rest API & Dictionary Pattern
 
-## The Single Page Application Era
+## The Single Page Application
 
 I remember back in around 2011 there was this new way of building websites call SPA started to gaine significant amount of attention among web community. With SPA we give the website everything it needs from the get-go so there is no round-trip between browser and server, website has enough state that to satisfy user interaction, offline interactivity and responsiveness.
 
@@ -11,3 +11,9 @@ As the rise of Javascript frameworks such as 2009 AngularJs[https://en.wikipedia
 ## Progressive Web App
 
 
+## Progressive loading
+
+
+## Reference
+
+Progressive loanding[https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Loading]
