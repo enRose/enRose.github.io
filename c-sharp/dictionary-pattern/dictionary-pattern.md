@@ -4,7 +4,7 @@ Before we delve into this pattern, let's understand some background as in why an
 
 ## The Single Page Application
 
-Although the concept started as early as early 2000, however the real introduction of SPA came around much later among web community. With SPA we give the website (almost) everything it needs from the get-go such as Javascript framework, whole HTML, full state or initial load state, etc. So there are less round-trips between browser and server, website has enough logic and state that to satisfy responsiveness, user interactions and offline interactivity, etc.
+Although the concept started as early as early 2000, however the real introduction of SPA came around only when Angularjs came to the scene. With SPA we give the website (almost) everything it needs from the get-go such as Javascript framework, whole HTML, full state or initial load state, etc. So there are less round-trips between browser and server, website has enough logic and state that to satisfy responsiveness, user interactions and offline interactivity, etc.
 
 The result is a much pleasant user experience as lagging is reduced. However, the biggest motivation in my opinion is to off-load as much as computation to the client as possible therefore cut down the cost of running server logic in the cloud.
 
