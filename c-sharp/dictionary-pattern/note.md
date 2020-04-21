@@ -1,4 +1,4 @@
-# Rest API & Dictionary Pattern
+# Rest API & Dictionary Pattern - note
 
 Before we delve into this pattern, let's understand some background as in why and how this pattern come to existence.
 
