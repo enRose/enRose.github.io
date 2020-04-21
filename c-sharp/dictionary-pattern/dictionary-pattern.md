@@ -4,7 +4,7 @@ Before we delve into this pattern, let's understand some background as in why an
 
 ## The Single Page Application
 
-Although the concept started as early as early 2000, however the real introduction of SPA came around only when Angularjs came to the scene. With SPA we give the website (almost) everything it needs from the get-go such as Javascript framework, whole HTML, full state or initial load state, etc. So there are less round-trips between browser and server, website has enough logic and state that to satisfy responsiveness, user interactions and offline interactivity, etc.
+Although the concept started as early as early 2000, however the real introduction of SPA came around only after Angularjs came to the scene. With SPA we give the website (almost) everything it needs from the get-go such as Javascript framework, whole HTML, full state or initial load state, etc. So there are less round-trips between browser and server, website has enough logic and state that to satisfy responsiveness, user interactions and offline interactivity, etc.
 
 The result is a much pleasant user experience as lagging is reduced. However, the biggest motivation in my opinion is to off-load as much as computation to the client as possible therefore cut down the cost of running server logic in the cloud.
 
@@ -22,9 +22,15 @@ They might be built in Angular or Reactjs, PWAs however, is not the same as SPAs
 
 ## Reference
 
+XMLHttpRequest[https://en.wikipedia.org/wiki/XMLHttpRequest]
+
+Evolution of the Single Page Application[http://paislee.io/evolution-of-the-single-page-application-2-of-2/]
+
 Single Page Application[https://en.wikipedia.org/wiki/Single-page_application]
 
 Choose between SPA vs traditional web app[https://docs.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/choose-between-traditional-web-and-single-page-apps]
+
+Progressive Web App - Alex Russell[https://infrequently.org/2015/06/progressive-apps-escaping-tabs-without-losing-our-soul/]
 
 Progressive Web App[https://medium.com/@amberleyjohanna/seriously-though-what-is-a-progressive-web-app-56130600a093]
 
