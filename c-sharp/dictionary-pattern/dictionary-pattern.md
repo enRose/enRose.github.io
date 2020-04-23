@@ -11,3 +11,7 @@ I am not going to discuss why if statements considered harmful in this post, you
 ## Reference
 
 Code Smells: If Statements[https://blog.jetbrains.com/idea/2017/09/code-smells-if-statements/]
+
+Polymorphism without Inheritence[https://stackoverflow.com/questions/11732422/is-polymorphism-possible-without-inheritance]
+
+On Understanding Types, Data Abstraction, and Polymorphism[http://lucacardelli.name/Papers/OnUnderstanding.A4.pdf]
