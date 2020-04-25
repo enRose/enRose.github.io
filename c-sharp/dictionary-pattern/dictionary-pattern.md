@@ -62,6 +62,28 @@ It is not that bad and simple to understand, but can we do better?
 
 ## Dictionary Pattern
 
+Yes we can! It is dictionary!
+
+The same code above can be rewritten as below and see how small it is!
+
+```
+private string GetQueryParameterBy(string token)
+{
+    var superHeroMap = new Dictionary<string, Func<string>> {
+        { QueryStringConstants.SpiderMan.ToLower(), GetSpiderMan },
+        { QueryStringConstants.Thanos.ToLower(), GetThanos },
+        { QueryStringConstants.IronMan.ToLower(), GetIronMan },
+        { QueryStringConstants.CaptainAmerica.ToLower(), GetCaptainAmerica },
+        { QueryStringConstants.WandaMaximoff.ToLower(), GetWandaMaximoff },
+        { QueryStringConstants.Hulk.ToLower(), GetHulk },
+        { QueryStringConstants.Deadpool.ToLower(), GetDeadpool },
+    };
+    
+    superHeroMap.TryGetValue(token, out var paramValue)
+    
+    return paramValue;
+}
+```
 
 
 ## Reference
