@@ -81,9 +81,12 @@ private string GetQueryParameterBy(string token)
         { QueryStringConstants.Deadpool, GetDeadpool },
     };
     
-    superHeroMap.TryGetValue(token, out var paramValue)
+    if (superHeroMap.TryGetValue(token, out var paramValue))
+    {
+        return paramValue();
+    }
     
-    return paramValue;
+    return null;
 }
 ```
 
