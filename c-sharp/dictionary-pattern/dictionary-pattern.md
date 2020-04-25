@@ -6,6 +6,60 @@ The idea of this pattern came to me when I first read Robert Martin's book Clean
 
 I am not going to discuss why if statements considered harmful in this post, you can find an excellent post by Jetbrains down below in Reference section. I do see the point as in why excessive amount of if statements are a terrible situation to be in. I don't however, quite agree that polymorphism underpins the problem at hand. Sometimes we could indeed refactor out of this if-inception by polymorphism -- subtype or inclusion polymorphism to be specific. Other times I feel this is too heavy handed because some scenarios are just too simple to warrant subtype polymorphism which is one of the strongest couplings in OO and it is not hard to get wrong! 
 
+Let's take a look at this example, not real but not far from real, I have seen code exactly like this.
+
+```
+private string GetQueryParameterBy(string token)
+{
+    string paramValue = null;
+
+    if (string.Equals(token, QueryStringConstants.Thanos,
+        StringComparison.OrdinalIgnoreCase))
+    {
+        paramValue = GetThanos();
+    }
+    else if (string.Equals(token, QueryStringConstants.SpiderMan,
+        StringComparison.OrdinalIgnoreCase))
+    {
+        paramValue = GetSpiderMan();
+    }
+    else if (string.Equals(token, QueryStringConstants.IronMan,
+        StringComparison.OrdinalIgnoreCase))
+    {
+        paramValue = GetIronMan();
+    }
+    else if (string.Equals(token, QueryStringConstants.CaptainAmerica,
+        StringComparison.OrdinalIgnoreCase))
+    {
+        paramValue = GetCaptainAmerica();
+    }
+    else if (string.Equals(token, QueryStringConstants.WandaMaximoff,
+        StringComparison.OrdinalIgnoreCase))
+    {
+        paramValue = GetWandaMaximoff();
+    }
+    else if (string.Equals(token, QueryStringConstants.Thor,
+        StringComparison.OrdinalIgnoreCase))
+    {
+        paramValue = GetThor();
+    }
+    else if (string.Equals(token, QueryStringConstants.Hulk,
+        StringComparison.OrdinalIgnoreCase))
+    {
+        paramValue = GetHulk();
+    }
+    else if (string.Equals(token, QueryStringConstants.Deadpool,
+        StringComparison.OrdinalIgnoreCase))
+    {
+        paramValue = GetDeadpool();
+    }
+
+    return paramValue;
+}
+```
+
+
+## 
 
 
 ## Reference
