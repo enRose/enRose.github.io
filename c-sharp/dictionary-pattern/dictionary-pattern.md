@@ -8,7 +8,7 @@ I am not going to discuss why if statements considered harmful in this post, you
 
 Let's take a look at this example, not real but not far from real, I have seen code exactly like this.
 
-```
+```C#
 private string GetQueryParameterBy(string token)
 {
     string paramValue = null;
@@ -66,7 +66,7 @@ Yes we can! It is dictionary!
 
 The same code above can be rewritten as below and see how small it is!
 
-```
+```C#
 private string GetQueryParameterBy(string token)
 {
     var comparer = StringComparer.OrdinalIgnoreCase;
