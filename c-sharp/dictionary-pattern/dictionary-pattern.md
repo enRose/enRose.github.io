@@ -69,14 +69,16 @@ The same code above can be rewritten as below and see how small it is!
 ```
 private string GetQueryParameterBy(string token)
 {
-    var superHeroMap = new Dictionary<string, Func<string>> {
-        { QueryStringConstants.SpiderMan.ToLower(), GetSpiderMan },
-        { QueryStringConstants.Thanos.ToLower(), GetThanos },
-        { QueryStringConstants.IronMan.ToLower(), GetIronMan },
-        { QueryStringConstants.CaptainAmerica.ToLower(), GetCaptainAmerica },
-        { QueryStringConstants.WandaMaximoff.ToLower(), GetWandaMaximoff },
-        { QueryStringConstants.Hulk.ToLower(), GetHulk },
-        { QueryStringConstants.Deadpool.ToLower(), GetDeadpool },
+    var comparer = StringComparer.OrdinalIgnoreCase;
+
+    var superHeroMap = new Dictionary<string, Func<string>>(comparer) {
+        { QueryStringConstants.SpiderMan, GetSpiderMan },
+        { QueryStringConstants.Thanos, GetThanos },
+        { QueryStringConstants.IronMan, GetIronMan },
+        { QueryStringConstants.CaptainAmerica, GetCaptainAmerica },
+        { QueryStringConstants.WandaMaximoff, GetWandaMaximoff },
+        { QueryStringConstants.Hulk, GetHulk },
+        { QueryStringConstants.Deadpool, GetDeadpool },
     };
     
     superHeroMap.TryGetValue(token, out var paramValue)
@@ -84,6 +86,10 @@ private string GetQueryParameterBy(string token)
     return paramValue;
 }
 ```
+
+We fold knowledge into a clever data structure so our program can be as dumb as possible. We can use any data structure that fits our purpose. Quite often, I find myself using a dictionary to encapulate knowledge therefore I call it Dictionary Pattern. 
+
+Let's look at another example which again is based off some real production code I have seen.
 
 
 ## Reference
