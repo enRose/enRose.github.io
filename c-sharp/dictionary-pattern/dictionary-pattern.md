@@ -606,6 +606,42 @@ namespace Barin.API.DictionaryPattern
 }
 ```
 
+With Dictionary Pattern applied however, what we get is:
+
+A. much cleaner, smaller controller.
+
+B. a clean separate between route relaying and compuation logic in the service layer.
+
+B. a gateway that we can apply common logics e.g. security check, data sanitisation, customer eligibility check, etc. 
+
+```C#
+// A gateway to all query routes:
+public async Task<Data> Query(Guid userId, string queryRoute)
+{
+    var eligibility = await CheckElligibility(userId).ConfigureAwait(false);
+
+    if (eligibility != Validity.OK) {
+        Analytics.LogUserStatus(
+            queryRoute,
+            eligibility
+        );
+
+        return new Data { Eligibility = eligibility };
+    }
+
+    var resovlerFunc = new QueryResolver<Data, QueryRoute>()
+      .TryGetResolver(
+        queryRoute, Resolvers
+    );
+
+    var data = await resovlerFunc().ConfigureAwait(false);
+
+    data.Eligibility = CustomerValidity.OK;
+
+    return data;
+}
+```
+
 
 ## Reference
 
