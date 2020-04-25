@@ -96,9 +96,9 @@ Dictionary pattern fundamentally is about correlation, it relates two things tog
 
 Let's look at another example which again is based off some real production code I have seen. 
 
-I have seen some blog posts comparing Rest API vs Graphql claims Rest API has one endpoint per resource whereas Graphql only has one endpoint for all. This is simply not true. Graphql has two endpoints: query and mutation. Query for Get and mutation for both put and post as Rest equivalence. As for Rest API, indeed most people would have three endpoint(get/put/post) for each every ressource, so if we have three resources, we could have up to 9 endpoints. However, we don't have to, we can use Dictionary Pattern to reduce the amount of endpoints to maximum 3, one for get, one for put and one for post.
+I have seen some blog posts comparing Rest API vs Graphql claims Rest API has one endpoint per resource whereas Graphql only has one endpoint for all. This is simply not true. To start with, Graphql has two endpoints: query and mutation. Query for Get and mutation for both put and post as Rest equivalence. As for Rest API, indeed, most people would have three endpoints(GET/PUT/POST) for each every ressource, so if we have three resources, we could have up to 9 endpoints. However, we don't have to, we can use Dictionary Pattern to reduce the amount of endpoints to maximum 3, one for get, one for put and one for post.
 
-Here is what a verbose Rest controller would look like. Every single resource has its own route.
+Here is what a verbose Rest controller would look like. Every single resource has its own GET route.
 
 ```C#
 using Microsoft.Practices.Unity;
@@ -161,7 +161,7 @@ namespace Barin.API.DictionaryPattern
 }
 ```
 
-The service that serves up the controller. Quite often we need to do some prerequisite check before we serve up the data e.g. check if customer is under aged, check if customer subscription has expired, etc. In this approach which I have seen a lot in real production code we need to repeat this prerequisite check for each every one of the endpoint we serve. Like I mentioned earlier if we have 3 resources we do get/put/post on we could have up to 9 endpoints so we could repeat this check 9 times! This is a huge waste should be reduced!
+The service that serves up the controller. Quite often we need to do some prerequisite check before we serve up the data e.g. check if customer is under aged, check if customer subscription has expired, etc. In this approach, which I have seen a lot in real production code, we need to repeat this prerequisite check for each every one of the endpoints we serve. Like I mentioned earlier if we have 3 resources we do GET/PUT/POST on, we could have up to 9 endpoints, so we could repeat this check up to 9 times! This is a huge waste should be reduced!
 
 ```C#
 namespace Barin.API.DictionaryPattern
@@ -406,7 +406,7 @@ namespace Barin.API.DictionaryPattern
 }
 ```
 
-Let's apply Dictionary Pattern. I only demostrate get, but the same principle goes for put and post.
+Let's apply Dictionary Pattern. I only demostrate GET, but the same principle goes for PUT and POST.
 
 ```C#
 namespace Barin.API.DictionaryPattern
@@ -432,9 +432,9 @@ namespace Barin.API.DictionaryPattern
 }
 ```
 
-In service, we create a Resolvers of dictionary<Enum, Func> type. The key is a string enum of a route name, and the value is a function delegate that serves that particular route.
+In service, we create a Resolvers of dictionary<Enum, Func> type. Its key is the string enum of a route name, and the value is a function delegate that serves that particular route.
 
-We are able to reduce controller code quite a bit, however, although the amount of code in the service has been reduced but not as significant as in controller. The reason is, just as in graphql's resolvers, each graphql resolver has to be specifically written out to serve a particular schema query or mutation, so do Rest API. There is no free lunch, someone, and in somewhere has to do the work!
+We are able to reduce controller code quite a bit. And although the amount of code in the service has been reduced but not as significant as in controller. The reason is, just as in graphql's resolvers, each graphql resolver has to be specifically written out to serve a particular schema query or mutation, so does Rest API. There is no free lunch, someone, and in somewhere has to do the work!
 
 ```C#
 
@@ -609,13 +609,15 @@ namespace Barin.API.DictionaryPattern
 }
 ```
 
-With Dictionary Pattern applied however, what we get is:
+With Dictionary Pattern applied however, what we get:
 
 A. much cleaner, smaller controller.
 
 B. a clean separate between route relaying and compuation logic in the service layer.
 
-B. a gateway that we can apply common logics e.g. security check, data sanitisation, customer eligibility check, etc. 
+C. a gateway that we can apply common logics or patterns e.g. security check, data sanitisation, customer eligibility check, etc.
+
+D. noises have been moved to gateway therefore compuation units/methods now are more focused.    
 
 ```C#
 // A gateway to all query routes:
