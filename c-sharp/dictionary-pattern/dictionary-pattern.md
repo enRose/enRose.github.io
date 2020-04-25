@@ -58,8 +58,10 @@ private string GetQueryParameterBy(string token)
 }
 ```
 
+It is not that bad and simple to understand, but can we do better? 
 
-## 
+## Dictionary Pattern
+
 
 
 ## Reference
