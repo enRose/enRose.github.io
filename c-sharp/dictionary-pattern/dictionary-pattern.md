@@ -406,7 +406,7 @@ namespace Barin.API.DictionaryPattern
 }
 ```
 
-Let's apply Dictionary Pattern. I only demostrate GET, but the same principle goes for PUT and POST.
+Let's apply Dictionary Pattern. I only demonstrate GET, but the same principle goes for PUT and POST.
 
 ```C#
 namespace Barin.API.DictionaryPattern
