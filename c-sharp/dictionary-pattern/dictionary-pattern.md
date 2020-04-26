@@ -90,7 +90,7 @@ private string GetQueryParameterBy(string token)
 }
 ```
 
-We fold knowledge into a clever data structure so our program can be as dumb as possible. We can use any data structure that fits our purpose. Quite often, I find myself using a dictionary to encapulate knowledge therefore I call it Dictionary Pattern. 
+We fold knowledge into a clever data structure so our program can be as dumb as possible. We can use any data structure that fits our purpose. Quite often, I find myself using a dictionary to encapsulate knowledge therefore I call it Dictionary Pattern. 
 
 Dictionary pattern fundamentally is about correlation, it relates two things together, i.e. if it is A then I want X, if it is B then I want Y, etc. 
 
