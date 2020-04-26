@@ -613,11 +613,11 @@ With Dictionary Pattern applied however, what we get:
 
 A. much cleaner, smaller controller.
 
-B. a clean separate between route relaying and compuation logic in the service layer.
+B. a clean separate between route relaying and computation logic in the service layer.
 
 C. a gateway that we can apply common logics or patterns e.g. security check, data sanitisation, customer eligibility check, etc.
 
-D. noises have been moved to gateway therefore compuation units/methods now are more focused.    
+D. noises have been moved to gateway therefore computation units/methods now are more focused.    
 
 ```C#
 // A gateway to all query routes:
@@ -652,6 +652,6 @@ public async Task<Data> Query(Guid userId, string queryRoute)
 
 Code Smells: If Statements[https://blog.jetbrains.com/idea/2017/09/code-smells-if-statements/]
 
-Polymorphism without Inheritence[https://stackoverflow.com/questions/11732422/is-polymorphism-possible-without-inheritance]
+Polymorphism without Inheritance[https://stackoverflow.com/questions/11732422/is-polymorphism-possible-without-inheritance]
 
 On Understanding Types, Data Abstraction, and Polymorphism[http://lucacardelli.name/Papers/OnUnderstanding.A4.pdf]
