@@ -1,0 +1,31 @@
+﻿<Properties StartupConfiguration="{13446352-70E4-4125-90E5-DE71A95F77ED}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CsharpAnonymousType/BenchMarker.cs">
+    <Files>
+      <File FileName="CsharpAnonymousType/Program.cs" Line="19" Column="40" />
+      <File FileName="CsharpAnonymousType/BenchMarker.cs" Line="6" Column="23" />
+      <File FileName="CsharpAnonymousType/SeeIt.cs" Line="2" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="CsharpAnonymousType" expanded="True">
+            <Node name="CsharpAnonymousType" expanded="True">
+              <Node name="Dependencies" expanded="True" />
+              <Node name="BenchMarker.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.AsyncPattern PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
