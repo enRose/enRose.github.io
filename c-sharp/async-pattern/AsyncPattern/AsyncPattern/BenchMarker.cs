@@ -2,69 +2,89 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using System.Linq;
 
 namespace AsyncPattern
 {
+    public struct Measurement
+    {
+        public string TaskName { get; set; }
+        public long ElapsedMs { get; set; }
+        public bool IsBackground { get; set; }
+        public bool IsThreadPoolThread { get; set; }
+        public int ManagedThreadId { get; set; }
+    }
+
     public class BenchMarker
     {
+        private readonly string appName;
         private Stopwatch stopwatch;
-        private static readonly object lockObj = new object();
+        private static readonly object lockObj = new object();       
+        private readonly Graph graph = new Graph();
 
-        public List<int> ThreadUsedLog { get; set; } = new List<int>();
-        public List<int> ThreadCountLog { get; set; } = new List<int>();
+        private HashSet<int> ThreadUsedLog { get; set; } = new HashSet<int>();
+        private HashSet<int> ThreadCountLog { get; set; } = new HashSet<int>();
+        private HashSet<Measurement> Log { get; set; } = new HashSet<Measurement>();
 
-        private SeeIt seeIt = new SeeIt();
+        public BenchMarker(string name)
+        {
+            this.appName = name;
+        }
 
-        public void Start()
+        public void StartWatch()
         {
             stopwatch = Stopwatch.StartNew();
         }
 
-        public void Stop(string taskName)
+        public void StopWatch()
         {
             stopwatch.Stop();
 
             var elapsedMs = stopwatch.ElapsedMilliseconds;
 
-            var i = ThreadCountLog[^1] -
-                ThreadCountLog[0] + 1;
+            Log.OrderBy(x => x.ElapsedMs).ToList().ForEach(x => {
+                var threadInfo = $"{x.TaskName} at {x.ElapsedMs} ms\n" +
+                      $"Background: {x.IsBackground}\n" +
+                      $"Thread Pool: {x.IsThreadPoolThread}\n" +
+                      $"Thread ID: {x.ManagedThreadId}\n";
 
-            string msg = $"{taskName}\n" +
+                Console.WriteLine(threadInfo);
+            });
+
+            var i = ThreadCountLog.OrderBy(c => c).ToList();
+
+            var c = i[^1] - i[0] + 1;
+
+            string msg = $"{appName}\n" +
                 $"Elapsed: {elapsedMs} ms\n" +
                 $"Thread used: {ThreadUsedLog.Count}\n" +
-                $"Concurrent thread used: {i}\n";
+                $"Concurrent thread used: {c}\n";
 
             Console.WriteLine(msg);
 
-            seeIt.Save();
+            graph.Draw(Log);
         }
 
-        public void Log(string taskName)
+        public void Measure(string taskName)
         {
-            string msg = null;
-
             var thread = Thread.CurrentThread;
 
             lock (lockObj)
             {
-                if (!ThreadUsedLog.Contains(thread.ManagedThreadId))
-                {
-                    ThreadUsedLog.Add(thread.ManagedThreadId);
-                }
-
-                ThreadCountLog.Add(Process.GetCurrentProcess().Threads.Count);
-
                 var elapsedMs = stopwatch.ElapsedMilliseconds;
 
-                seeIt.Draw(taskName, elapsedMs);
-
-                msg = $"{taskName} at {elapsedMs} ms\n" +
-                      $"Background: {thread.IsBackground}\n" +
-                      $"Thread Pool: {thread.IsThreadPoolThread}\n"+
-                      $"Thread ID: {thread.ManagedThreadId}\n";
+                ThreadUsedLog.Add(thread.ManagedThreadId);
+             
+                ThreadCountLog.Add(Process.GetCurrentProcess().Threads.Count);
+                
+                Log.Add(new Measurement {
+                    TaskName = taskName,
+                    ElapsedMs = elapsedMs,
+                    IsBackground = thread.IsBackground,
+                    ManagedThreadId = thread.ManagedThreadId,
+                    IsThreadPoolThread = thread.IsThreadPoolThread  
+                });
             }
-
-            Console.WriteLine(msg);
         }
 
         public void ShowAvailableThreadInfo()

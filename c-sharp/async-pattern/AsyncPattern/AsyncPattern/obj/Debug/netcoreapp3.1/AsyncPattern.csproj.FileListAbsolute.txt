@@ -14,7 +14,6 @@
 /Users/yiniyin/Projects/CsharpAnonymousType/CsharpAnonymousType/obj/Debug/netcoreapp3.1/AsyncPattern.csproj.CopyComplete
 /Users/yiniyin/Projects/CsharpAnonymousType/CsharpAnonymousType/bin/Debug/netcoreapp3.1/SeeIt.cs
 /Users/yiniyin/Projects/CsharpAnonymousType/CsharpAnonymousType/bin/Debug/netcoreapp3.1/chart.json
-/Users/yiniyin/Projects/blog/c-sharp/async-pattern/AsyncPattern/AsyncPattern/bin/Debug/netcoreapp3.1/SeeIt.cs
 /Users/yiniyin/Projects/blog/c-sharp/async-pattern/AsyncPattern/AsyncPattern/bin/Debug/netcoreapp3.1/chart.json
 /Users/yiniyin/Projects/blog/c-sharp/async-pattern/AsyncPattern/AsyncPattern/bin/Debug/netcoreapp3.1/AsyncPattern.deps.json
 /Users/yiniyin/Projects/blog/c-sharp/async-pattern/AsyncPattern/AsyncPattern/bin/Debug/netcoreapp3.1/AsyncPattern.runtimeconfig.json

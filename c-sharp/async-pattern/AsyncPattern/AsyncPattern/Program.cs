@@ -12,17 +12,15 @@ namespace AsyncPattern
 
         static async Task Main(string[] args)
         {
-            marker = new BenchMarker();
+            marker = new BenchMarker("Main");
 
-            marker.Start();
-
-            marker.Log("Main() start");
+            marker.StartWatch();
 
             //await Run(ProcessResultOneAtTheTime);
 
-            //await Run(WhenAllFinishesThenProcess);
+            await Run(WhenAllFinishesThenProcess);
 
-            await Run(WhenAllWithAsyncAndResultProcessInOneUnit);
+            //await Run(WhenAllWithAsyncAndResultProcessInOneUnit);
 
             //await Run(WhenAllWithAsyncAndResultProcessInOneUnitStress);
 
@@ -30,16 +28,12 @@ namespace AsyncPattern
 
             //await Run(EagerProcessingV2);
 
-            marker.Stop("Main() end");
+            marker.StopWatch();
         }
 
         static async Task Run(Func<Task> f)
         {
-            marker.Log($"{f.Method.Name} start");
-
             await f();
-
-            marker.Log($"{f.Method.Name} end");
         }
 
         static async Task ProcessResultOneAtTheTime()
@@ -65,9 +59,9 @@ namespace AsyncPattern
 
             await Task.WhenAll(t1, t2, t3);
 
-            response.Result1 = ProcessResult1(await t1);
-            response.Result2 = ProcessResult2(await t2);
             response.Result3 = ProcessResult3(await t3);
+            response.Result2 = ProcessResult2(await t2);
+            response.Result1 = ProcessResult1(await t1);
         }
 
         static async Task WhenAllWithAsyncAndResultProcessInOneUnit()
@@ -98,9 +92,9 @@ namespace AsyncPattern
             await Task.WhenAll(t1(), t2(), t3());
         }
 
-        // //////////////////////////
+        // ////////////////////////////
         // Stress test Task.WhenAll()
-        // //////////////////////////
+        // ////////////////////////////
         static async Task WhenAllWithAsyncAndResultProcessInOneUnitStress()
         {
             var result = new Result();
@@ -129,10 +123,10 @@ namespace AsyncPattern
             var stress = new List<Task>();
             var count = 0;
 
-            while (count < 1) {
+            while (count < 100) {
                 stress.Add(t1());
-                //stress.Add(t2());
-                //stress.Add(t3());
+                stress.Add(t2());
+                stress.Add(t3());
                 count++;
             }
 
@@ -217,13 +211,27 @@ namespace AsyncPattern
             }
         }
 
+        static async Task<TaskResult1> APICall(string callId)
+        {
+            marker.Measure($"API call {callId} start");
+
+            await Task.Delay(200);
+
+            marker.Measure($"API call {callId} end");
+
+            return new TaskResult1
+            {
+                APIResult1 = "Task 1 Result"
+            };
+        }
+
         static async Task<TaskResult1> APICall1()
         {
-            marker.Log("API call 1 start");
+            marker.Measure("API call 1 start");
 
             await Task.Delay(250);
 
-            marker.Log("API call 1 end");
+            marker.Measure("API call 1 end");
 
             return new TaskResult1
             {
@@ -233,11 +241,11 @@ namespace AsyncPattern
 
         static async Task<TaskResult2> APICall2()
         {
-            marker.Log("API call 2 start");
+            marker.Measure("API call 2 start");
 
             await Task.Delay(100);
 
-            marker.Log("API call 2 end");
+            marker.Measure("API call 2 end");
 
             return new TaskResult2
             {
@@ -247,11 +255,11 @@ namespace AsyncPattern
 
         static async Task<TaskResult3> APICall3()
         {
-            marker.Log("API call 3 start");
+            marker.Measure("API call 3 start");
 
             await Task.Delay(60);
 
-            marker.Log("API call 3 end");
+            marker.Measure("API call 3 end");
 
             return new TaskResult3
             {
@@ -261,11 +269,11 @@ namespace AsyncPattern
 
         static Result1Processed ProcessResult1(TaskResult1 r1)
         {
-            marker.Log("Process result 1 start");
+            marker.Measure("Process result 1 start");
 
             Thread.Sleep(50);
 
-            marker.Log("Process result 1 end");
+            marker.Measure("Process result 1 end");
 
             return new Result1Processed() {
                 FinalResult = r1.APIResult1 + " processed"
@@ -274,11 +282,11 @@ namespace AsyncPattern
 
         static Result2Processed ProcessResult2(TaskResult2 r1)
         {
-            marker.Log("Process result 2 start");
+            marker.Measure("Process result 2 start");
 
             Thread.Sleep(60);
             
-            marker.Log("Process result 2 end");
+            marker.Measure("Process result 2 end");
 
             return new Result2Processed()
             {
@@ -288,11 +296,11 @@ namespace AsyncPattern
 
         static Result3Processed ProcessResult3(TaskResult3 r1)
         {
-            marker.Log("Process result 3 start");
+            marker.Measure("Process result 3 start");
 
             Thread.Sleep(30);
 
-            marker.Log("Process result 3 end");
+            marker.Measure("Process result 3 end");
 
             return new Result3Processed()
             {
