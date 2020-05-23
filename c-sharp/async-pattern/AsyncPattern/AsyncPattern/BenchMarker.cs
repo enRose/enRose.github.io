@@ -17,6 +17,8 @@ namespace AsyncPattern
 
     public class BenchMarker
     {
+        public static Stopwatch stopwatchLite;
+
         private readonly string appName;
         private Stopwatch stopwatch;
         private static readonly object lockObj = new object();       
@@ -94,6 +96,12 @@ namespace AsyncPattern
             Console.WriteLine("Thread pool threads available at startup: ");
             Console.WriteLine("Worker threads: {0:N0}", worker);
             Console.WriteLine("Asynchronous I/O threads: {0:N0}", io);
+        }
+
+        public static void StopwatchLiteDip(string taskName)
+        {
+            var elapsedMs = stopwatchLite.ElapsedMilliseconds;
+            Console.WriteLine($"{taskName} at {elapsedMs}\n");
         }
     }
 }

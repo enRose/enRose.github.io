@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "t3QY+oeb787kl4OKBG1HamE3rYCdaCxvfPSmY1Ea2513WIPkfsqmwMEOSTMoXhiP+XEzUfBULJraOM56B1Ci4Q==",
+  "success": true,
+  "projectFilePath": "/Users/yiniyin/Projects/blog/c-sharp/async-pattern/AsyncPattern/AsyncPattern/AsyncPattern.csproj",
+  "expectedPackageFiles": [
+    "/Users/yiniyin/.nuget/packages/newtonsoft.json/12.0.3/newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

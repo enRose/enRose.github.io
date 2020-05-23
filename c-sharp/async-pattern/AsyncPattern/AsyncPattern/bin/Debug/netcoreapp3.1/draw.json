@@ -1,1 +1,34 @@
-{"dataProvider":[{"category":"API call 1","open":"0.35","close":"3.06"},{"category":"API call 2","open":"0.52","close":"1.59"},{"category":"API call 3","open":"0.53","close":"1.19"},{"category":"Process result 3","open":"3.08","close":"3.39"},{"category":"Process result 2","open":"3.41","close":"4.04"},{"category":"Process result 1","open":"4.05","close":"4.56"}]}
+{
+    "dataProvider": [
+        {
+            "category": "API call 1",
+            "open": "0.4",
+            "close": "3.11"
+        },
+        {
+            "category": "API call 2",
+            "open": "0.58",
+            "close": "1.63"
+        },
+        {
+            "category": "API call 3",
+            "open": "0.58",
+            "close": "1.27"
+        },
+        {
+            "category": "Process result 1",
+            "open": "3.12",
+            "close": "3.67"
+        },
+        {
+            "category": "Process result 2",
+            "open": "3.68",
+            "close": "4.31"
+        },
+        {
+            "category": "Process result 3",
+            "open": "4.32",
+            "close": "4.67"
+        }
+    ]
+}
