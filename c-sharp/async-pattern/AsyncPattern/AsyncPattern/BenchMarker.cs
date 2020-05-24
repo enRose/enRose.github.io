@@ -30,12 +30,15 @@ namespace AsyncPattern
 
         public BenchMarker(string name)
         {
-            this.appName = name;
+            appName = name;
         }
 
         public void StartWatch()
         {
             stopwatch = Stopwatch.StartNew();
+
+            Console.WriteLine($"{appName} start at " +
+                $"{stopwatch.ElapsedMilliseconds} ms *************\n");
         }
 
         public void StopWatch()

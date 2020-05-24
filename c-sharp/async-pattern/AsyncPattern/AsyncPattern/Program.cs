@@ -18,18 +18,18 @@ namespace AsyncPattern
 
             marker.StartWatch();
 
-            await Run(ProcessResultOneAtTheTime);
+            //await Run(ProcessResultOneAtTheTime);
 
             //await Run(WhenAllFinishesThenProcess);
 
             //await Run(WhenAllWithAsyncAndResultProcessInOneUnit);
 
-            //await Run(WhenAllWithAsyncAndResultProcessInOneUnitStress);
+            await Run(WhenAllWithAsyncAndResultProcessInOneUnitStress);
 
             //await Run(EagerProcessingV1);
 
             //await Run(EagerProcessingV2);
-
+            
             marker.StopWatch();
         }
 
@@ -94,52 +94,69 @@ namespace AsyncPattern
             await Task.WhenAll(t1(), t2(), t3());
         }
 
+
+
         // ////////////////////////////
         // Stress test Task.WhenAll()
         // ////////////////////////////
         static async Task WhenAllWithAsyncAndResultProcessInOneUnitStress()
         {
             var result = new Result();
-
-            //async Task t1()
-            //{
-            //    var r = await APICall1();
-
-            //    result.Result1 = ProcessResult1(r);
-            //}
-
-            //async Task t2()
-            //{
-            //    var r = await APICall2();
-
-            //    result.Result2 = ProcessResult2(r);
-            //}
-
-            //async Task t3()
-            //{
-            //    var r = await APICall3();
-
-            //    result.Result3 = ProcessResult3(r);
-            //}
+            var random = new Random();
 
             async Task t(int taskId)
             {
-                var r = await APICall(taskId);
+                int asyncDuration = random.Next(2500, 2750);
 
-                result.Result1 = ProcessResult(r, taskId);
+                int processingDuration = random.Next(2550, 2800);
+
+                var r = await APICall(taskId, asyncDuration);
+
+                result.Result1 = ProcessResult(r, taskId, processingDuration);
             }
 
             var stress = new List<Task>();
             var count = 0;
 
-            while (count < 2) {
+            while (count < 1000) {
                 stress.Add(t(++count));
-                //stress.Add(t2());
-                //stress.Add(t3());
             }
 
             await Task.WhenAll(stress);
         }
+
+        static async Task<TaskResult1> APICall(int callId, int durationMs = 200)
+        {
+            marker.Measure($"API call {callId} start");
+
+            await Task.Delay(durationMs);
+
+            marker.Measure($"API call {callId} end");
+
+            return new TaskResult1
+            {
+                APIResult1 = "Task 1 Result"
+            };
+        }
+
+        static Result1Processed ProcessResult(TaskResult1 r1, int taskId, int durationMs = 50)
+        {
+            marker.Measure($"Process result {taskId} start");
+
+            Thread.Sleep(durationMs);
+
+            marker.Measure($"Process result {taskId} end");
+
+            return new Result1Processed()
+            {
+                FinalResult = r1.APIResult1 + " processed"
+            };
+        }
+        // ////////////////////////////
+        // Stress test Task.WhenAll()
+        // ////////////////////////////
+
+
 
         static async Task EagerProcessingV1()
         {
@@ -217,38 +234,6 @@ namespace AsyncPattern
 
                 tasks.Remove(completedTask);
             }
-        }
-
-        static async Task<TaskResult1> APICall(int callId)
-        {
-            var elapsedMs = stopwatch.ElapsedMilliseconds;
-            Console.WriteLine($"call 1 start {elapsedMs}\n");
-            //marker.Measure($"API call {callId} start");
-
-            await Task.Delay(200);
-
-            //marker.Measure($"API call {callId} end");
-            elapsedMs = stopwatch.ElapsedMilliseconds;
-            Console.WriteLine($"call 1 end {elapsedMs}\n");
-
-            return new TaskResult1
-            {
-                APIResult1 = "Task 1 Result"
-            };
-        }
-
-        static Result1Processed ProcessResult(TaskResult1 r1, int taskId)
-        {
-            marker.Measure($"Process result {taskId} start");
-
-            Thread.Sleep(50);
-
-            marker.Measure($"Process result {taskId} end");
-            
-            return new Result1Processed()
-            {
-                FinalResult = r1.APIResult1 + " processed"
-            };
         }
 
         static async Task<TaskResult1> APICall1()
