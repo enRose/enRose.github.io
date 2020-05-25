@@ -24,11 +24,11 @@ namespace AsyncPattern
 
             //await Run(WhenAllWithAsyncAndResultProcessInOneUnit);
 
-            await Run(WhenAllWithAsyncAndResultProcessInOneUnitStress);
+            //await Run(WhenAllWithAsyncAndResultProcessInOneUnitStress);
 
-            //await Run(EagerProcessingV1);
+            //await Run(ProcessTasksAsTheyCompleteV1);
 
-            //await Run(EagerProcessingV2);
+            await Run(ProcessTaskAsTheyCompleteAsyncAndProcessingInOneUnit);
             
             marker.StopWatch();
         }
@@ -106,9 +106,9 @@ namespace AsyncPattern
 
             async Task t(int taskId)
             {
-                int asyncDuration = random.Next(2500, 2750);
+                int asyncDuration = random.Next(250, 250);
 
-                int processingDuration = random.Next(2550, 2800);
+                int processingDuration = random.Next(50, 50);
 
                 var r = await APICall(taskId, asyncDuration);
 
@@ -118,7 +118,7 @@ namespace AsyncPattern
             var stress = new List<Task>();
             var count = 0;
 
-            while (count < 1000) {
+            while (count < 3) {
                 stress.Add(t(++count));
             }
 
@@ -158,7 +158,7 @@ namespace AsyncPattern
 
 
 
-        static async Task EagerProcessingV1()
+        static async Task ProcessTasksAsTheyCompleteV1()
         {
             var result = new Result();
 
@@ -183,7 +183,7 @@ namespace AsyncPattern
                 return () => result.Result3 = ProcessResult3(r);
             }
 
-            var tasks = new List<Task<Action>> {
+            var tasks = new HashSet<Task<Action>> {
                 t1(), t2(), t3()
             };
 
@@ -198,7 +198,7 @@ namespace AsyncPattern
             }
         }
 
-        static async Task EagerProcessingV2()
+        static async Task ProcessTaskAsTheyCompleteAsyncAndProcessingInOneUnit()
         {
             var resultContext = new Result();
 
@@ -223,8 +223,7 @@ namespace AsyncPattern
                 resultContext.Result3 = ProcessResult3(r);
             };
 
-
-            var tasks = new List<Task>() { t1(), t2(), t3() };
+            var tasks = new HashSet<Task>() { t1(), t2(), t3() };
 
             while (tasks.Any())
             {
