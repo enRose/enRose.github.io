@@ -51,7 +51,7 @@ class App extends React.Component {
     /////////////
     const files = this.fileInput.current.files
     
-    let formData = new FormData(e.target)
+    let formData = new FormData()
 
     for(let i = 0; i < files.length; i++) {
       formData.append( `file-${i}`, files[i])
