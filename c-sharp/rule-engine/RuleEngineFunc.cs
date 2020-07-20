@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Barin.RuleEngine
+namespace API.Barin.RuleEngine.
 {
     public class RuleResult
     { 
@@ -11,8 +11,52 @@ namespace API.Barin.RuleEngine
         public string Reason { get; set; }
     }
 
+    public class RuleResultWithSideEffect
+    {
+        public bool IsValid { get; set; }
+        public string Reason { get; set; }
+        public (Type type, object val) SideEffect { get; set; }
+    }
+
     public class RuleEngineCluster<T> where T : class, new()
     {
+        public Dictionary<Type, object> SideEffect { get; set; }
+            = new Dictionary<Type, object>();
+
+        public TSideEffect PickOptimistically<TSideEffect>() where TSideEffect: class
+        {
+            if (SideEffect.Count == 0) 
+            {
+                return null;
+            }
+
+            if (SideEffect.TryGetValue(typeof(TSideEffect), out object value))
+            {
+                return (TSideEffect)value;
+            }
+
+            return null;
+        }
+
+        public RuleResultWithSideEffect FirstFailsWithSideEffect(
+            IList<Func<T, RuleResultWithSideEffect>> sequentialRules, T ruleCtx)
+        {
+            RuleResultWithSideEffect firstFailed = null;
+
+            _ = sequentialRules?.FirstOrDefault(r =>
+            {
+                var result = r(ruleCtx);
+
+                SideEffect[result.SideEffect.type] = result.SideEffect.val;
+
+                firstFailed = result.IsValid == false ? result : null;
+
+                return firstFailed != null;
+            });
+
+            return firstFailed;
+        }
+
         public RuleResult FirstFails(
             IList<Func<T, RuleResult>> sequentialRules, T ruleCtx)
         {
