@@ -18,12 +18,12 @@ namespace API.Barin.RuleEngine
         public (Type type, object val) SideEffect { get; set; }
     }
 
-    public class RuleEngineCluster<T> where T : class, new()
+    public class RuleEngine<T> where T : class, new()
     {
         public Dictionary<Type, object> SideEffect { get; set; }
             = new Dictionary<Type, object>();
 
-        public TSideEffect PickOptimistically<TSideEffect>() where TSideEffect: class
+        public TSideEffect Pick<TSideEffect>() where TSideEffect: class
         {
             if (SideEffect.Count == 0) 
             {
@@ -74,7 +74,7 @@ namespace API.Barin.RuleEngine
             return firstFailed;
         }
 
-        public IEnumerable<RuleResult> All(
+        public IEnumerable<RuleResult> FirstFails(
             IList<Func<T, RuleResult>> sequentialRules, T ruleCtx)
             => sequentialRules?.Select(r => r(ruleCtx));
 
@@ -123,21 +123,14 @@ namespace API.Barin.RuleEngine
             this IList<Func<T, RuleResult>> sequentialRules, T ruleCtx)
             where T : class, new()
         {
-            return new RuleEngineCluster<T>().FirstFails(sequentialRules, ruleCtx);
+            return new RuleEngine<T>().FirstFails(sequentialRules, ruleCtx);
         }
-
-        public static IEnumerable<RuleResult> All<T>(
-            this IList<Func<T, RuleResult>> sequentialRules, T ruleCtx)
-            where T : class, new() =>
-
-            new RuleEngineCluster<T>().All(sequentialRules, ruleCtx);
-
 
         public static async Task<RuleResult> FirstFails<T>(
             this IList<Func<T, Task<RuleResult>>> sequentialAsyncRules,  T ruleCtx)
             where T : class, new()
         {
-            return await new RuleEngineCluster<T>()
+            return await new RuleEngine<T>()
                 .FirstFails(sequentialAsyncRules, ruleCtx)
                 .ConfigureAwait(false);
         }
@@ -146,7 +139,7 @@ namespace API.Barin.RuleEngine
             this List<Func<T, Task<RuleResult>>> parallelAsyncRules, T ruleCtx)
             where T : class, new()
         {
-            return await new RuleEngineCluster<T>()
+            return await new RuleEngine<T>()
                 .ParallelAll(parallelAsyncRules, ruleCtx)
                 .ConfigureAwait(false);
         }
