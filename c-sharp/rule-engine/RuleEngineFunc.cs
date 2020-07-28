@@ -74,7 +74,7 @@ namespace API.Barin.RuleEngine
             return firstFailed;
         }
 
-        public IEnumerable<RuleResult> FirstFails(
+        public IEnumerable<RuleResult> All(
             IList<Func<T, RuleResult>> sequentialRules, T ruleCtx)
             => sequentialRules?.Select(r => r(ruleCtx));
 
@@ -125,6 +125,11 @@ namespace API.Barin.RuleEngine
         {
             return new RuleEngine<T>().FirstFails(sequentialRules, ruleCtx);
         }
+        
+        public static IEnumerable<RuleResult> All<T>(
+            this IList<Func<T, RuleResult>> sequentialRules, T ruleCtx)
+            where T : class, new() =>
+            new RuleEngineCluster<T>().All(sequentialRules, ruleCtx);
 
         public static async Task<RuleResult> FirstFails<T>(
             this IList<Func<T, Task<RuleResult>>> sequentialAsyncRules,  T ruleCtx)
