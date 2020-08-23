@@ -1,0 +1,462 @@
+{
+  "formatVersion": 3,
+  "id": "root",
+  "ideas": {
+    "1": {
+      "title": "UI",
+      "id": 1,
+      "attr": {
+        "position": [
+          1094.2967071533121,
+          587,
+          1
+        ]
+      },
+      "ideas": {
+        "1": {
+          "title": "Implemented as JS Feature",
+          "id": 3,
+          "ideas": {
+            "1": {
+              "title": "not feasible, because at the end of signup flow token requestor will need to return the control back to issuer's app by invoking an URI.  As current mobile native container limitations, returning to a webview from a web browser is not supported.",
+              "id": 7,
+              "attr": {
+                "style": {
+                  "width": 315
+                }
+              }
+            }
+          }
+        },
+        "-1": {
+          "title": "implemented in native: swift & Kotlin",
+          "id": 5,
+          "ideas": {
+            "1": {
+              "title": "entry",
+              "id": 19,
+              "ideas": {
+                "1": {
+                  "title": "possibly 2nd entry at Dash Board.\n \ncallouts:\nentry tiles are dismissable and uncertainty about how to resurface if dismissed\n\nuncertain productionalised timeframe",
+                  "id": 21,
+                  "attr": {
+                    "style": {
+                      "width": 112
+                    }
+                  }
+                },
+                "2": {
+                  "title": "alternative flow if user has been tokenised by klarna",
+                  "id": 46
+                }
+              },
+              "attr": {}
+            },
+            "2": {
+              "title": "intro",
+              "id": 20,
+              "ideas": {}
+            },
+            "3": {
+              "title": "consent ",
+              "id": 23,
+              "ideas": {
+                "1": {
+                  "title": "share ASB data to Klarna i.e. name, email, phone, dob.  Not OAuth",
+                  "id": 26,
+                  "attr": {
+                    "style": {
+                      "width": 146
+                    }
+                  }
+                }
+              }
+            },
+            "4": {
+              "title": "customer info",
+              "id": 24,
+              "ideas": {
+                "1": {
+                  "title": "update",
+                  "id": 27,
+                  "ideas": {
+                    "1": {
+                      "title": "native - has to duplicate what feature does e.g. verify when update",
+                      "id": 57
+                    },
+                    "2": {
+                      "title": "redirect to customer profile Feature",
+                      "id": 58,
+                      "attr": {
+                        "style": {
+                          "backgroundColor": "#99CC00"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "5": {
+              "title": "select card",
+              "id": 25,
+              "ideas": {
+                "1": {
+                  "title": "allow only one card?",
+                  "id": 36
+                }
+              }
+            },
+            "6": {
+              "title": "redirect to Klarna web in browser",
+              "id": 28
+            },
+            "7": {
+              "title": "klarna signup flow starts",
+              "id": 29,
+              "ideas": {
+                "1": {
+                  "title": "uneditable customer info?",
+                  "id": 30
+                },
+                "2": {
+                  "title": "omit txn enrich data sharing consent?",
+                  "id": 31
+                }
+              }
+            },
+            "8": {
+              "title": "klarna signup ends",
+              "id": 32
+            },
+            "9": {
+              "title": "redirect to ASB app by deeplinking",
+              "id": 34
+            },
+            "10": {
+              "title": "confirmation",
+              "id": 35
+            }
+          }
+        }
+      }
+    },
+    "2": {
+      "title": "assumptions",
+      "id": 8,
+      "attr": {
+        "position": [
+          -423,
+          -762,
+          1
+        ]
+      },
+      "ideas": {
+        "1": {
+          "title": "resourcing",
+          "id": 9,
+          "ideas": {
+            "1": {
+              "title": "1 senior Android dev",
+              "id": 12
+            },
+            "2": {
+              "title": "1 senior iOS dev",
+              "id": 13
+            },
+            "3": {
+              "title": "1 senior integration dev - moible service & Exp API & webhooks receiver",
+              "id": 14
+            },
+            "4": {
+              "title": "1senior middleware / payments dev - Visa Hub & Visa APIs",
+              "id": 15
+            }
+          }
+        },
+        "2": {
+          "title": "each components should be validated by UX designers and devs that responsible for building the components",
+          "id": 22,
+          "attr": {
+            "style": {
+              "width": 161
+            }
+          }
+        },
+        "-1": {
+          "title": "estimate",
+          "id": 16,
+          "ideas": {
+            "1": {
+              "title": "in effort, not in time",
+              "id": 17
+            },
+            "2": {
+              "title": "accuracy based on what we know so far.  May evolve as our understanding deepens",
+              "id": 18,
+              "attr": {
+                "style": {
+                  "width": 241
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "4": {
+      "title": "mobile service",
+      "id": 38,
+      "ideas": {
+        "-1": {
+          "title": "token inquiry endpoint",
+          "id": 41,
+          "ideas": {
+            "1": {
+              "title": "mw / payments",
+              "id": 42,
+              "ideas": {
+                "2": {
+                  "title": "loop throu cards",
+                  "id": 44,
+                  "ideas": {
+                    "1": {
+                      "title": "invoke Token Inquiry API to determine if a token already exists for a particular card with a particular Token Requestor",
+                      "id": 45,
+                      "ideas": {
+                        "1": {
+                          "title": "Visa",
+                          "id": 47
+                        }
+                      }
+                    },
+                    "2": {
+                      "title": "Or, could we use existing DB that stores device tokens to also store COF tokens, so we don't need to call out to visa?",
+                      "id": 48
+                    }
+                  }
+                }
+              },
+              "attr": {}
+            }
+          }
+        },
+        "-11": {
+          "title": "customer profile endpoint",
+          "id": 49,
+          "attr": {
+            "position": [
+              100,
+              58,
+              1
+            ]
+          },
+          "ideas": {
+            "1": {
+              "title": "customer-profile exp API",
+              "id": 52,
+              "attr": {
+                "style": {
+                  "backgroundColor": "#99CC00"
+                }
+              },
+              "ideas": {
+                "1": {
+                  "title": "Onyx",
+                  "id": 53
+                }
+              }
+            }
+          }
+        },
+        "-21": {
+          "title": "send payment instrument endpoint",
+          "id": 59,
+          "attr": {
+            "position": [
+              149,
+              166,
+              2
+            ]
+          },
+          "ideas": {
+            "1": {
+              "title": "mw / payments",
+              "id": 62,
+              "ideas": {
+                "1": {
+                  "title": "encrypted payment instrument, user details, issuer universal link and OTP(one-time password generated by API keys provided by Visa) ",
+                  "id": 63,
+                  "ideas": {
+                    "1": {
+                      "title": "Klarna web",
+                      "id": 64,
+                      "attr": {
+                        "position": [
+                          122,
+                          263,
+                          1
+                        ]
+                      },
+                      "ideas": {
+                        "1": {
+                          "title": "klarna srv",
+                          "id": 65,
+                          "ideas": {
+                            "1": {
+                              "title": "1. call Visa Validate JWE API to get client info e.g. name, phone, etc. and OTP",
+                              "id": 66,
+                              "ideas": {}
+                            },
+                            "2": {
+                              "title": "2. verify email & phone",
+                              "id": 71
+                            },
+                            "3": {
+                              "title": "3. call Enroll PAN API to enroll the payment instrument",
+                              "id": 72
+                            },
+                            "4": {
+                              "title": "4. Provision Token API",
+                              "id": 73
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "attr": {
+        "position": [
+          189.609375,
+          445.03125,
+          1
+        ]
+      }
+    },
+    "5": {
+      "title": "visa",
+      "id": 74,
+      "attr": {
+        "position": [
+          -844.171875,
+          824.03125,
+          1
+        ]
+      }
+    },
+    "6": {
+      "title": "5. visa notifies ASB COF tokenised",
+      "id": 75,
+      "attr": {
+        "position": [
+          -683.390625,
+          1034.03125,
+          1
+        ]
+      }
+    }
+  },
+  "title": "UI",
+  "attr": {
+    "theme": "default"
+  },
+  "links": [
+    {
+      "ideaIdFrom": 46,
+      "ideaIdTo": 41,
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": "to",
+          "label": "check if tokenised by klarna"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 27,
+      "ideaIdTo": 49,
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": "to",
+          "label": "Not able to update netcode phone & dob"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 28,
+      "ideaIdTo": 59,
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": "to",
+          "label": "JWE PAN, cust info"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 66,
+      "ideaIdTo": 74,
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 71,
+      "ideaIdTo": 74,
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 72,
+      "ideaIdTo": 74,
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 73,
+      "ideaIdTo": 74,
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": "to"
+        }
+      }
+    },
+    {
+      "ideaIdFrom": 74,
+      "ideaIdTo": 75,
+      "attr": {
+        "style": {
+          "color": "#707070",
+          "lineStyle": "dashed",
+          "arrow": "to"
+        }
+      }
+    }
+  ]
+}
