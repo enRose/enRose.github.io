@@ -14,6 +14,7 @@ But wait, this is NOT how it turns out, we don't change the sliding doors whenev
 
 Now, let's look at another example where mechanism and policy are amalgamated. We don't need to look afar -- the front door of our house. If you are renting or have bought a house, you would know or notice landlord may change the lock between tenancy. And most likely, a new set of locks will be put in when you purchase a house. The reason is the pattern of the key blade (policy) is physically built into the lock (mechanism). Because this physical coupling, when policy changes, mechanism changes as well.
 
-Okay, that's fine, but how does it translate to programming? Please read the [Rule Engine Pattern](https://enrose.github.io/c-sharp/rule-engine-pattern) article for further study.
+Okay, that's fine, but how does it translate to programming? Please read the [Rule Engine Pattern](https://enrose.github.io/c-sharp/rule-engine/rule-engine-pattern) article for further study.
+
 
 As always thanks for reading please PR me any suggestions appreciated.
